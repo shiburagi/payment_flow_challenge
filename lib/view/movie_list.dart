@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:payment_flow_challenge/pages/booking.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
-import 'package:payment_flow_challenge/utils/layout.dart';
 
 class MovieList extends StatelessWidget {
   MovieList({Key key, this.items}) : super(key: key);
 
   final List items;
-  final double imageWidth = 172.0;
+  static double imageWidth = 120;
+  static double reserveWidth = imageWidth + 44.0;
 
-  Widget itemView(context, Movie) {
+  Widget itemView(context, movie) {
     Widget widget = Container(
-      key: Key(Movie["_id"]),
+      key: Key(movie["_id"]),
       margin: EdgeInsets.only(bottom: 1),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
       ),
       child: Row(
         children: <Widget>[
-          Container(
-            height: 160,
-            color: Theme.of(context).primaryColor,
-            child: Image.network(
-              Movie["Detail"]["URLforGraphic"],
-              width: 140,
-              fit: BoxFit.fitHeight,
+          Hero(
+            tag: "${movie["Id"]}-image",
+            child: Container(
+              height: 160,
+              color: Theme.of(context).primaryColor,
+              child: Image.network(
+                movie["Detail"]["URLforGraphic"],
+                width: imageWidth,
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
           Container(
-            width: 4,
+            width: 12,
           ),
           Column(
             children: <Widget>[
@@ -37,9 +41,9 @@ class MovieList extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       width:
-                          MediaQuery.of(context).size.width - imageWidth - 38,
+                          MediaQuery.of(context).size.width - reserveWidth - 10,
                       child: Text(
-                        Movie["Name"].toUpperCase(),
+                        movie["Name"].toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .subhead
@@ -51,14 +55,14 @@ class MovieList extends StatelessWidget {
                       height: 6,
                     ),
                     Text(
-                      "(${Movie["Detail"]["Censor"]}) ${Movie["Detail"]["Content"]}",
+                      "(${movie["Detail"]["Censor"]}) ${movie["Detail"]["Content"]}",
                       style: Theme.of(context)
                           .textTheme
                           .subhead
                           .copyWith(wordSpacing: 0),
                     ),
                     Text(
-                      "${Movie["Detail"]["Duration"]} minutes",
+                      "${movie["Detail"]["Duration"]} minutes",
                       style: Theme.of(context)
                           .textTheme
                           .subhead
@@ -73,12 +77,13 @@ class MovieList extends StatelessWidget {
                 height: 6,
               ),
               Container(
-                width: MediaQuery.of(context).size.width - imageWidth - 8,
+                width: MediaQuery.of(context).size.width - reserveWidth - 8,
                 child: Row(
                   children: <Widget>[
                     Row(children: <Widget>[
                       FloatingActionButton(
                         onPressed: () {},
+                        heroTag: "${movie["Id"]}-info",
                         mini: true,
                         backgroundColor: Colors.white,
                         child: Icon(
@@ -88,6 +93,7 @@ class MovieList extends StatelessWidget {
                       ),
                       FloatingActionButton(
                         onPressed: () {},
+                        heroTag: "${movie["Id"]}-share",
                         mini: true,
                         backgroundColor: Colors.white,
                         child: Icon(
@@ -96,26 +102,6 @@ class MovieList extends StatelessWidget {
                         ),
                       ),
                     ]),
-//                    FloatingActionButton(
-//                      onPressed: () {},
-//                      mini: true,
-//                      backgroundColor: Theme.of(context).primaryColor,
-//                      foregroundColor: Theme.of(context).accentColor,
-//                      child: Icon(
-//                        Icons.shopping_cart,
-//                        size: 16,
-//                      ),
-//                    ),
-//                    FlatButton(
-//
-//                        onPressed: () {},
-//                        child: Text(
-//                          "BUY",
-//                          style: Theme.of(context)
-//                              .textTheme
-//                              .button
-//                              .copyWith(color: Theme.of(context).accentColor),
-//                        ))
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
@@ -148,20 +134,35 @@ class MovieList extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor.withAlpha(100),
-    
-//        border: Border(
-//          bottom: BorderSide(color: Theme.of(context).primaryColor, width: 1),
-//        ),
+        border: Border(
+          bottom: BorderSide(color: Theme.of(context).cardColor, width: 1),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget listView = ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, position) {
+        var movie = items[position];
+        return GestureDetector(
+          child: itemView(context, movie),
+          onTap: () {
+//            Navigator.push(context, SlideLeftRoute(widget: BookingPage(title: movie["Name"],)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BookingPage(
+                          movie: movie,
+                        )));
+          },
+        );
+      },
+    );
     return Container(
-        child: Layout.fill(context,
-            child: ListView(
-              children: items.map((Movie) => itemView(context, Movie)).toList(),
-            )));
+      child: listView,
+    );
   }
 }

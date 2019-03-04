@@ -39,6 +39,9 @@ class _AppPageState extends State<AppPage> {
         menu: Menu(items: items),
         color: Theme.of(context).primaryColor,
         textStyle: Theme.of(context).textTheme.headline.copyWith(),
+        onMenuItemSelected: (s){
+
+        },
       ),
     );
   }

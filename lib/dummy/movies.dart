@@ -1,6 +1,6 @@
 const movies=[
     {
-      "strID": "HO00002328",
+      "Id": "HO00002328",
       "Name": "A DOG'S WAY HOME",
       "strRating": "P13",
       "Name_2": "",
@@ -52,7 +52,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00001878",
+      "Id": "HO00001878",
       "Name": "ALITA: BATTLE ANGEL*",
       "strRating": "P13",
       "Name_2": "",
@@ -111,7 +111,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002013",
+      "Id": "HO00002013",
       "Name": "CAPTAIN MARVEL",
       "strRating": "TBC",
       "Name_2": "",
@@ -170,7 +170,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002274",
+      "Id": "HO00002274",
       "Name": "COLD PURSUIT",
       "strRating": "18",
       "Name_2": "",
@@ -229,7 +229,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002321",
+      "Id": "HO00002321",
       "Name": "DEAREST ANITA",
       "strRating": "U",
       "Name_2": "",
@@ -281,7 +281,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002297",
+      "Id": "HO00002297",
       "Name": "FALL IN LOVE AT FIRST KISS*",
       "strRating": "P13",
       "Name_2": "",
@@ -340,7 +340,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002352",
+      "Id": "HO00002352",
       "Name": "HANUM & RANGGA",
       "strRating": "P13",
       "Name_2": "",
@@ -392,7 +392,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002318",
+      "Id": "HO00002318",
       "Name": "HAPPY DEATH DAY 2U",
       "strRating": "P13",
       "Name_2": "",
@@ -444,7 +444,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002055",
+      "Id": "HO00002055",
       "Name": "HOW TO TRAIN YOUR DRAGON: THE HIDDEN WORLD*",
       "strRating": "P13",
       "Name_2": "",
@@ -503,7 +503,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002317",
+      "Id": "HO00002317",
       "Name": "INTEGRITY*",
       "strRating": "P13",
       "Name_2": "",
@@ -562,7 +562,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002308",
+      "Id": "HO00002308",
       "Name": "MISTERI DILAILA",
       "strRating": "P13",
       "Name_2": "",
@@ -621,7 +621,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002069",
+      "Id": "HO00002069",
       "Name": "THE LEGO MOVIE 2: THE SECOND PART*",
       "strRating": "U",
       "Name_2": "",
@@ -680,7 +680,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002314",
+      "Id": "HO00002314",
       "Name": "THE NEW KING OF COMEDY*",
       "strRating": "P13",
       "Name_2": "",
@@ -732,7 +732,7 @@ const movies=[
       }
     },
     {
-      "strID": "HO00002319",
+      "Id": "HO00002319",
       "Name": "THE PRODIGY",
       "strRating": "18",
       "Name_2": "",

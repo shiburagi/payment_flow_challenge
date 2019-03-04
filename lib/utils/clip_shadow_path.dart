@@ -71,3 +71,30 @@ class _ClipShadowShadowPainter extends CustomPainter {
     return true;
   }
 }
+
+
+
+
+class RadiusClipper extends CustomClipper<Path> {
+  var clipSize = 8.0;
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height / 2 - clipSize);
+    path.lineTo(size.width - clipSize, size.height / 2);
+    path.lineTo(size.width, size.height / 2 + clipSize);
+    path.lineTo(size.width, size.height);
+
+    path.lineTo(0.0, size.height);
+    path.lineTo(0.0, 0.0);
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(LeftClipRectClipper oldClipper) => true;
+}
