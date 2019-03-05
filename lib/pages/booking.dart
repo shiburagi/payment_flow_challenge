@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/components/dropdown.dart';
+import 'package:payment_flow_challenge/pages/seat_selection.dart';
 
 class BookingPage extends StatefulWidget {
   BookingPage({Key key, this.title, this.movie}) : super(key: key);
@@ -19,15 +20,6 @@ class _BookingPageState extends State<BookingPage> {
   double itemHeight = 100.0;
   double radius = 24.0;
   int totalField = 2;
-
-  List<Color> colors = [
-    Colors.black12,
-    Colors.black54,
-    Colors.black,
-//    Colors.teal,
-//    Colors.pink,
-//    Colors.blue,
-  ];
 
   int diffPerTone = 12;
 
@@ -60,24 +52,23 @@ class _BookingPageState extends State<BookingPage> {
       width: constraints.maxWidth,
       fit: BoxFit.fitHeight,
     );
-    return Hero(
-      tag: "${widget.movie["Id"]}-image",
-      child: new Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: NetworkImage(widget.movie["Detail"]["URLforGraphic"]),
-            fit: BoxFit.cover,
-          ),
+    return new Container(
+      decoration: new BoxDecoration(
+        image: new DecorationImage(
+          image: NetworkImage(widget.movie["Detail"]["URLforGraphic"]),
+          fit: BoxFit.cover,
         ),
-        //I blured the parent container to blur background image, you can get rid of this part
-        child: new BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            height: 280,
-            padding: EdgeInsets.only(bottom: radius),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.1),
-            ),
+      ),
+      child: new BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          height: 280,
+          padding: EdgeInsets.only(bottom: radius),
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.1),
+          ),
+          child: Hero(
+            tag: "${widget.movie["Id"]}-image",
             child: image,
           ),
         ),
@@ -210,8 +201,12 @@ class _BookingPageState extends State<BookingPage> {
                         bottom: 24,
                         left: constraints.maxWidth / 2 - 24,
                         child: FloatingActionButton(
-                          child: Icon(Icons.credit_card),
-                          onPressed: () {},
+                          child: Icon(Icons.event_seat),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => SeatSelection()));
+                          },
                         )),
                   ],
                 ),

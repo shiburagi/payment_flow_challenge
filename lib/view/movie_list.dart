@@ -7,7 +7,7 @@ class MovieList extends StatelessWidget {
 
   final List items;
   static double imageWidth = 120;
-  static double reserveWidth = imageWidth + 44.0;
+  static double reserveWidth = imageWidth + 45.0;
 
   Widget itemView(context, movie) {
     Widget widget = Container(
