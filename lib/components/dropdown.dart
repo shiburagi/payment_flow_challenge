@@ -9,7 +9,6 @@ class DropDown extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _DropDownState();
   }
 }
@@ -30,7 +29,7 @@ class _DropDownState extends State<DropDown> {
       hint: Text(widget.hint),
       decoration: InputDecoration(
         contentPadding:
-            EdgeInsets.only(left: 24, right: 24, top: 16, bottom: 16),
+            EdgeInsets.only(left: 70, right: 12, top: 16, bottom: 16),
 
         border: border,
         enabledBorder: border,

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/components/dropdown.dart';
+import 'package:payment_flow_challenge/components/number_textfield.dart';
 import 'package:payment_flow_challenge/pages/seat_selection.dart';
 
 class BookingPage extends StatefulWidget {
@@ -11,7 +12,6 @@ class BookingPage extends StatefulWidget {
 
   @override
   _BookingPageState createState() {
-    // TODO: implement createState
     return _BookingPageState();
   }
 }
@@ -23,20 +23,24 @@ class _BookingPageState extends State<BookingPage> {
 
   int diffPerTone = 12;
 
+  TextEditingController adultController = TextEditingController();
+  TextEditingController childrenController = TextEditingController();
+
   Color getColor(index) {
     int color = diffPerTone * totalField + 20 - diffPerTone * (index + 1);
 
     return Color.fromRGBO(color, color, color, 1);
   }
 
-  Widget itemContainer(context, constraints, {child, int index, colorIndex}) {
+  Widget itemContainer(context, constraints,
+      {child, int index, colorIndex, int span = 1}) {
     double top = (itemHeight - radius) * index + 0;
     return Container(
       margin: EdgeInsets.only(top: top),
       child: ClipRRect(
         child: Container(
-          padding: EdgeInsets.only(top: 16, left: 24, right: 24),
-          height: itemHeight,
+          padding: EdgeInsets.only(top: 16, left: 8, right: 8),
+          height: (itemHeight - radius) * span + radius,
           color: getColor(colorIndex),
           width: constraints.maxWidth,
           child: child,
@@ -106,84 +110,65 @@ class _BookingPageState extends State<BookingPage> {
                                       constraints,
                                       index: 0,
                                       colorIndex: 0,
-                                      child: DropDown(
-                                        hint: "Hall Type",
-                                        items: [
-                                          "ATMOS",
-                                          "3D",
-                                          "Normal",
+                                      span: 3,
+                                      child: Column(
+                                        children: <Widget>[
+                                          DropDown(
+                                            hint: "Hall Type",
+                                            items: [
+                                              "ATMOS",
+                                              "3D",
+                                              "Normal",
+                                            ],
+                                          ),
+                                          DropDown(
+                                            hint: "Date",
+                                            items: [
+                                              "Tue - Mar 05, 2019",
+                                              "Wed - Mar 06, 2019",
+                                              "Thu - Mar 07, 2019",
+                                              "Fri - Mar 08, 2019",
+                                            ],
+                                          ),
+                                          DropDown(
+                                            hint: "Time",
+                                            items: [
+                                              "12:00 PM",
+                                              "3:30 PM",
+                                              "7:00 PM",
+                                            ],
+                                          ),
+                                          Container(
+                                            height: radius,
+                                          )
                                         ],
-                                      ),
-                                    ),
-                                    itemContainer(
-                                      context,
-                                      constraints,
-                                      colorIndex: 0,
-                                      index: 1,
-                                      child: DropDown(
-                                        hint: "Date",
-                                        items: [
-                                          "Tue - Mar 05, 2019",
-                                          "Wed - Mar 06, 2019",
-                                          "Thu - Mar 07, 2019",
-                                          "Fri - Mar 08, 2019",
-                                        ],
-                                      ),
-                                    ),
-                                    itemContainer(
-                                      context,
-                                      constraints,
-                                      index: 2,
-                                      colorIndex: 0,
-                                      child: DropDown(
-                                        hint: "Time",
-                                        items: [
-                                          "12:00 PM",
-                                          "3:30 PM",
-                                          "7:00 PM",
-                                        ],
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     itemContainer(
                                       context,
                                       constraints,
                                       index: 3,
+                                      span: 2,
                                       colorIndex: 1,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
+                                      child: Column(
+                                        children: <Widget>[
+                                          NumberTextInput(
                                             hintText: "Adult",
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                24, 16, 24, 16),
-                                            border: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 0,
-                                                    color: Colors.transparent)),
-                                            enabledBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 0,
-                                                    color:
-                                                        Colors.transparent))),
-                                      ),
-                                    ),
-                                    itemContainer(
-                                      context,
-                                      constraints,
-                                      index: 4,
-                                      colorIndex: 1,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
+                                            controller: adultController,
+                                          ),
+//
+                                          NumberTextInput(
                                             hintText: "Children",
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                24, 16, 24, 16),
-                                            border: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 0,
-                                                    color: Colors.transparent)),
-                                            enabledBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 0,
-                                                    color:
-                                                        Colors.transparent))),
+                                            controller: childrenController,
+                                          ),
+                                          Container(
+                                            height: radius,
+                                          )
+                                        ],
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     Container(
@@ -202,10 +187,18 @@ class _BookingPageState extends State<BookingPage> {
                         left: constraints.maxWidth / 2 - 24,
                         child: FloatingActionButton(
                           child: Icon(Icons.event_seat),
+                          heroTag: "next",
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 fullscreenDialog: true,
-                                builder: (context) => SeatSelection()));
+                                builder: (context) => SeatSelection(
+                                      adult:
+                                          int.tryParse(adultController.text) ??
+                                              0,
+                                      children:
+                                          int.tryParse(childrenController.text) ??
+                                              0,
+                                    )));
                           },
                         )),
                   ],

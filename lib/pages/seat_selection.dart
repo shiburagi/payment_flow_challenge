@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SeatSelection extends StatefulWidget {
+  SeatSelection({
+    this.adult,
+    this.children,
+    Key key,
+  }) : super(key: key);
+  final int adult;
+  final int children;
+
   @override
   _SeatSelectionState createState() {
     return _SeatSelectionState();
@@ -58,6 +66,10 @@ class _SeatSelectionState extends State<SeatSelection> {
     });
   }
 
+  String addS(value) {
+    return value > 1 ? "s" : "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,28 +84,79 @@ class _SeatSelectionState extends State<SeatSelection> {
                             height: 20,
                           ),
                           Container(
-                            height: 40,
+                            padding: EdgeInsets.only(bottom: 12),
                             width: constraints.maxWidth,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: Colors.white54,
-//                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                              border: Border(bottom: BorderSide(
+                                color: Colors.white,width: 2
+                              ))
+//                              color: Colors.white54,
                             ),
                             child: Text(
                               "Screen",
                               style: Theme.of(context)
                                   .textTheme
                                   .subhead
-                                  .copyWith(color: Colors.black),
+                                  .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
                             ),
                           ),
                           Container(
                             height: 40,
                           ),
                           buildSeatLayout(context),
+                          Container(
+                            height: 120,
+                          )
                         ],
                       )),
             ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                height: 120,
+                padding:
+                    EdgeInsets.only(bottom: 24, top: 24, left: 24, right: 24),
+                color: Colors.black,
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Seat${addS(seatSelected.length)} selected : ${seatSelected.length}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle
+                                  .copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                                "Requested seat${addS(widget.adult + widget.children)} : ${widget.adult + widget.children}",
+                                style: Theme.of(context).textTheme.subtitle),
+                            Container(
+                              height: 2,
+                            ),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
+                      ),
+                      flex: 1,
+                    ),
+                    Container(
+                      child: FloatingActionButton(
+                        child: Icon(Icons.credit_card),
+                        heroTag: "next",
+                        onPressed: () {},
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ));
   }
@@ -159,7 +222,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       int i = seatSelected.indexOf(index);
       if (i != -1)
         seatSelected.remove(index);
-      else
+      else if (widget.children + widget.adult > seatSelected.length)
         seatSelected.add(index);
 
       print("select ${i} ${index} ${seatSelected.toString()}");
