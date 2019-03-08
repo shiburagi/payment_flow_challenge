@@ -198,6 +198,7 @@ class _BookingPageState extends State<BookingPage> {
                                       children:
                                           int.tryParse(childrenController.text) ??
                                               0,
+                                      movie:widget.movie
                                     )));
                           },
                         )),
