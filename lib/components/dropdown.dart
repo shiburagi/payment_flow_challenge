@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
-  DropDown({this.items, this.hint, Key key}) : super(key: key);
+  DropDown({this.items, this.hint, this.controller, Key key}) : super(key: key);
 
   final String hint;
   final List items;
+  final DropDownController controller;
 
   @override
   State<StatefulWidget> createState() {
@@ -14,10 +15,12 @@ class DropDown extends StatefulWidget {
 }
 
 class _DropDownState extends State<DropDown> {
-  String dropdownValue;
+  DropDownController defaultController = DropDownController();
 
   @override
   Widget build(BuildContext context) {
+    DropDownController controller = widget?.controller ?? defaultController;
+
     var border = OutlineInputBorder(
       borderSide: BorderSide(
         width: 0,
@@ -25,18 +28,17 @@ class _DropDownState extends State<DropDown> {
       ),
     );
     return DropdownButtonFormField<String>(
-      value: dropdownValue,
+      value: controller.value,
       hint: Text(widget.hint),
       decoration: InputDecoration(
         contentPadding:
             EdgeInsets.only(left: 70, right: 12, top: 16, bottom: 16),
-
         border: border,
         enabledBorder: border,
       ),
       onChanged: (String newValue) {
         setState(() {
-          dropdownValue = newValue;
+          controller.value = newValue;
         });
       },
       items: (widget.items).map((value) {
@@ -47,4 +49,10 @@ class _DropDownState extends State<DropDown> {
       }).toList(),
     );
   }
+}
+
+class DropDownController {
+  DropDownController({this.value});
+
+  String value;
 }

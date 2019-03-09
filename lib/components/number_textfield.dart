@@ -42,6 +42,7 @@ class _NumberTextInputState extends State<NumberTextInput> {
                   hintText: widget.hintText,
                   contentPadding: EdgeInsets.fromLTRB(24, 16, 24, 16),
                   border: border,
+                  focusedBorder: border,
                   enabledBorder: border),
             ),
             flex: 1,

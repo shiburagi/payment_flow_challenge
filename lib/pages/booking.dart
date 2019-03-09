@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/components/dropdown.dart';
 import 'package:payment_flow_challenge/components/number_textfield.dart';
+import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/pages/seat_selection.dart';
 
 class BookingPage extends StatefulWidget {
@@ -22,6 +23,11 @@ class _BookingPageState extends State<BookingPage> {
   int totalField = 2;
 
   int diffPerTone = 12;
+
+  DropDownController cinemaController = DropDownController();
+  DropDownController hallTypeController = DropDownController();
+  DropDownController dateController = DropDownController();
+  DropDownController timeController = DropDownController();
 
   TextEditingController adultController = TextEditingController();
   TextEditingController childrenController = TextEditingController();
@@ -52,14 +58,14 @@ class _BookingPageState extends State<BookingPage> {
 
   buildPreview(BuildContext context, BoxConstraints constraints) {
     Image image = Image.network(
-      widget.movie["Detail"]["URLforGraphic"],
+      widget.movie.detail.urlforGraphic,
       width: constraints.maxWidth,
       fit: BoxFit.fitHeight,
     );
     return new Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
-          image: NetworkImage(widget.movie["Detail"]["URLforGraphic"]),
+          image: NetworkImage(widget.movie.detail.urlforGraphic),
           fit: BoxFit.cover,
         ),
       ),
@@ -72,7 +78,7 @@ class _BookingPageState extends State<BookingPage> {
             color: Colors.grey.withOpacity(0.1),
           ),
           child: Hero(
-            tag: "${widget.movie["Id"]}-image",
+            tag: "${widget.movie.id}-image",
             child: image,
           ),
         ),
@@ -84,12 +90,13 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.movie["Name"]),
+          title: Text(widget.movie.name),
           elevation: 0,
         ),
         backgroundColor: getColor(totalField - 1),
         body: LayoutBuilder(
-          builder: (context, constraints) => Container(
+          builder: (context, constraints) =>
+              Container(
                 height: constraints.maxHeight,
                 color: getColor(totalField - 1),
                 child: Stack(
@@ -110,10 +117,21 @@ class _BookingPageState extends State<BookingPage> {
                                       constraints,
                                       index: 0,
                                       colorIndex: 0,
-                                      span: 3,
+                                      span: 4,
                                       child: Column(
                                         children: <Widget>[
                                           DropDown(
+                                            controller: cinemaController,
+                                            hint: "Cinema",
+                                            items: [
+                                              "IOI Mall",
+                                              "Mid Valley",
+                                              "Nu Sentral",
+                                              "Paradigm Mall",
+                                            ],
+                                          ),
+                                          DropDown(
+                                            controller: hallTypeController,
                                             hint: "Hall Type",
                                             items: [
                                               "ATMOS",
@@ -122,6 +140,7 @@ class _BookingPageState extends State<BookingPage> {
                                             ],
                                           ),
                                           DropDown(
+                                            controller: dateController,
                                             hint: "Date",
                                             items: [
                                               "Tue - Mar 05, 2019",
@@ -131,6 +150,7 @@ class _BookingPageState extends State<BookingPage> {
                                             ],
                                           ),
                                           DropDown(
+                                            controller: timeController,
                                             hint: "Time",
                                             items: [
                                               "12:00 PM",
@@ -143,13 +163,13 @@ class _BookingPageState extends State<BookingPage> {
                                           )
                                         ],
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     itemContainer(
                                       context,
                                       constraints,
-                                      index: 3,
+                                      index: 4,
                                       span: 2,
                                       colorIndex: 1,
                                       child: Column(
@@ -168,7 +188,7 @@ class _BookingPageState extends State<BookingPage> {
                                           )
                                         ],
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     Container(
@@ -189,17 +209,23 @@ class _BookingPageState extends State<BookingPage> {
                           child: Icon(Icons.event_seat),
                           heroTag: "next",
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => SeatSelection(
-                                      adult:
-                                          int.tryParse(adultController.text) ??
-                                              0,
-                                      children:
-                                          int.tryParse(childrenController.text) ??
-                                              0,
-                                      movie:widget.movie
-                                    )));
+                            BookingDetail detail = BookingDetail(
+                                cinemaController.value,
+                                hallTypeController.value,
+                                dateController.value,
+                                timeController.value,
+                                int.tryParse(adultController.text) ?? 0,
+                                int.tryParse(childrenController.text) ?? 0);
+                            if (detail.validate())
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) =>
+                                      SeatSelection(
+                                          movie: widget.movie,
+                                          bookingDetail: detail;
+                                      )));
+
+
                           },
                         )),
                   ],

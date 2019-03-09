@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/pages/payment.dart';
 
 class SeatSelection extends StatefulWidget {
   SeatSelection({
-    this.adult,
-    this.children,
     this.movie,
+    this.bookingDetail,
     Key key,
   }) : super(key: key);
-  final int adult;
-  final int children;
   final movie;
+  final BookingDetail bookingDetail;
 
   @override
   _SeatSelectionState createState() {
@@ -79,7 +78,9 @@ class _SeatSelectionState extends State<SeatSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text(widget.bookingDetail.cinema),
+        ),
         body: Stack(
           children: <Widget>[
             GestureDetector(
@@ -123,6 +124,11 @@ class _SeatSelectionState extends State<SeatSelection> {
                                         .textTheme
                                         .subhead
                                         .copyWith(
+                                            fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .subhead
+                                                    .fontSize *
+                                                scale,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700),
                                   ),
@@ -201,7 +207,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       int i = seatSelected.indexOf(seat);
       if (i != -1)
         seatSelected.remove(seat);
-      else if (widget.children + widget.adult > seatSelected.length)
+      else if (widget.bookingDetail.totalTicket() > seatSelected.length)
         seatSelected.add(seat);
     });
   }
@@ -229,7 +235,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                        "Requested seat${addS(widget.adult + widget.children)} : ${widget.adult + widget.children}",
+                        "Requested seat${addS(widget.bookingDetail.totalTicket())} : ${widget.bookingDetail.totalTicket()}",
                         style: Theme.of(context).textTheme.subtitle),
                     Container(
                       height: 2,
@@ -246,12 +252,14 @@ class _SeatSelectionState extends State<SeatSelection> {
                 child: Icon(Icons.credit_card),
                 heroTag: "next",
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PaymentPage(
-                          adult: widget.adult,
-                          children: widget.children,
-                          movie: widget.movie),
-                      fullscreenDialog: true));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => PaymentPage(
+                              bookingDetail: widget.bookingDetail,
+                              movie: widget.movie),
+                          fullscreenDialog: true), (route) {
+                    return route.isFirst;
+                  });
                 },
               ),
             )

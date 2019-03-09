@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/pages/booking.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
+import 'package:payment_flow_challenge/entities/movie.dart';
 
 class MovieList extends StatelessWidget {
   MovieList({Key key, this.items}) : super(key: key);
@@ -10,8 +11,9 @@ class MovieList extends StatelessWidget {
   static double reserveWidth = imageWidth + 45.0;
 
   Widget itemView(context, movie) {
+
     Widget widget = Container(
-      key: Key(movie["_id"]),
+      key: Key(movie.id),
       margin: EdgeInsets.only(bottom: 1),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
@@ -19,12 +21,12 @@ class MovieList extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Hero(
-            tag: "${movie["Id"]}-image",
+            tag: "${movie.id}-image",
             child: Container(
               height: 160,
               color: Theme.of(context).primaryColor,
               child: Image.network(
-                movie["Detail"]["URLforGraphic"],
+                movie.detail.urlforGraphic,
                 width: imageWidth,
                 fit: BoxFit.fitWidth,
               ),
@@ -43,7 +45,7 @@ class MovieList extends StatelessWidget {
                       width:
                           MediaQuery.of(context).size.width - reserveWidth - 10,
                       child: Text(
-                        movie["Name"].toUpperCase(),
+                        movie.name.toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .subhead
@@ -55,14 +57,14 @@ class MovieList extends StatelessWidget {
                       height: 6,
                     ),
                     Text(
-                      "(${movie["Detail"]["Censor"]}) ${movie["Detail"]["Content"]}",
+                      "(${movie.detail.censor}) ${movie.detail.content}",
                       style: Theme.of(context)
                           .textTheme
                           .subhead
                           .copyWith(wordSpacing: 0),
                     ),
                     Text(
-                      "${movie["Detail"]["Duration"]} minutes",
+                      "${movie.detail.duration} minutes",
                       style: Theme.of(context)
                           .textTheme
                           .subhead
@@ -83,7 +85,7 @@ class MovieList extends StatelessWidget {
                     Row(children: <Widget>[
                       FloatingActionButton(
                         onPressed: () {},
-                        heroTag: "${movie["Id"]}-info",
+                        heroTag: "${movie.id}-info",
                         mini: true,
                         backgroundColor: Colors.white,
                         child: Icon(
@@ -93,7 +95,7 @@ class MovieList extends StatelessWidget {
                       ),
                       FloatingActionButton(
                         onPressed: () {},
-                        heroTag: "${movie["Id"]}-share",
+                        heroTag: "${movie.id}-share",
                         mini: true,
                         backgroundColor: Colors.white,
                         child: Icon(
@@ -146,7 +148,7 @@ class MovieList extends StatelessWidget {
     Widget listView = ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, position) {
-        var movie = items[position];
+        var movie = Movie().fromJson(items[position]);
         return GestureDetector(
           child: itemView(context, movie),
           onTap: () {
