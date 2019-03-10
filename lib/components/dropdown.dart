@@ -37,6 +37,7 @@ class _DropDownState extends State<DropDown> {
         enabledBorder: border,
       ),
       onChanged: (String newValue) {
+        controller.onChanged(newValue);
         setState(() {
           controller.value = newValue;
         });
@@ -51,8 +52,10 @@ class _DropDownState extends State<DropDown> {
   }
 }
 
-class DropDownController {
+class DropDownController<T> {
   DropDownController({this.value});
 
   String value;
+
+  ValueChanged<T> onChanged = (t) {};
 }

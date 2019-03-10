@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:payment_flow_challenge/components/backdrop_image.dart';
 import 'package:payment_flow_challenge/components/dropdown.dart';
 import 'package:payment_flow_challenge/components/number_textfield.dart';
 import 'package:payment_flow_challenge/entities/booking_detail.dart';
@@ -32,6 +31,8 @@ class _BookingPageState extends State<BookingPage> {
   TextEditingController adultController = TextEditingController();
   TextEditingController childrenController = TextEditingController();
 
+  BookingDetail detail;
+
   Color getColor(index) {
     int color = diffPerTone * totalField + 20 - diffPerTone * (index + 1);
 
@@ -62,28 +63,70 @@ class _BookingPageState extends State<BookingPage> {
       width: constraints.maxWidth,
       fit: BoxFit.fitHeight,
     );
-    return new Container(
-      decoration: new BoxDecoration(
-        image: new DecorationImage(
-          image: NetworkImage(widget.movie.detail.urlforGraphic),
-          fit: BoxFit.cover,
+    return BackdropImage(
+      image: NetworkImage(widget.movie.detail.urlforGraphic),
+      child: Container(
+        height: 280,
+        padding: EdgeInsets.only(bottom: radius),
+        decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.1),
         ),
-      ),
-      child: new BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
-          height: 280,
-          padding: EdgeInsets.only(bottom: radius),
-          decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
-          ),
-          child: Hero(
-            tag: "${widget.movie.id}-image",
-            child: image,
-          ),
+        child: Hero(
+          tag: "${widget.movie.id}-image",
+          child: image,
         ),
       ),
     );
+  }
+
+  updateBookingDetail() {
+    detail = BookingDetail(
+        cinemaController.value,
+        hallTypeController.value,
+        dateController.value,
+        timeController.value,
+        int.tryParse(adultController.text) ?? 0,
+        int.tryParse(childrenController.text) ?? 0);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateBookingDetail();
+    var updateState = () => setState(() {
+          updateBookingDetail();
+        });
+
+    cinemaController.onChanged((v) {
+      updateState();
+    });
+
+    hallTypeController.onChanged((v) {
+      updateState();
+    });
+
+    dateController.onChanged((v) {
+      updateState();
+    });
+
+    timeController.onChanged((v) {
+      updateState();
+    });
+
+    adultController.addListener(() {
+      updateState();
+    });
+
+    childrenController.addListener(() {
+      updateState();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    adultController.dispose();
+    childrenController.dispose();
   }
 
   @override
@@ -95,8 +138,7 @@ class _BookingPageState extends State<BookingPage> {
         ),
         backgroundColor: getColor(totalField - 1),
         body: LayoutBuilder(
-          builder: (context, constraints) =>
-              Container(
+          builder: (context, constraints) => Container(
                 height: constraints.maxHeight,
                 color: getColor(totalField - 1),
                 child: Stack(
@@ -163,7 +205,7 @@ class _BookingPageState extends State<BookingPage> {
                                           )
                                         ],
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     itemContainer(
@@ -188,7 +230,7 @@ class _BookingPageState extends State<BookingPage> {
                                           )
                                         ],
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                       ),
                                     ),
                                     Container(
@@ -208,25 +250,18 @@ class _BookingPageState extends State<BookingPage> {
                         child: FloatingActionButton(
                           child: Icon(Icons.event_seat),
                           heroTag: "next",
-                          onPressed: () {
-                            BookingDetail detail = BookingDetail(
-                                cinemaController.value,
-                                hallTypeController.value,
-                                dateController.value,
-                                timeController.value,
-                                int.tryParse(adultController.text) ?? 0,
-                                int.tryParse(childrenController.text) ?? 0);
-                            if (detail.validate())
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (context) =>
-                                      SeatSelection(
+                          backgroundColor: detail.validate()
+                              ? Theme.of(context).accentColor
+                              : Theme.of(context).disabledColor,
+                          onPressed: detail.validate()
+                              ? () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (context) => SeatSelection(
                                           movie: widget.movie,
-                                          bookingDetail: detail;
-                                      )));
-
-
-                          },
+                                          bookingDetail: detail)));
+                                }
+                              : null,
                         )),
                   ],
                 ),

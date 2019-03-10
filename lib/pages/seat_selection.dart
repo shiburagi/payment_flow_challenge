@@ -55,7 +55,7 @@ class _SeatSelectionState extends State<SeatSelection> {
         list.add({
           "index": list.length,
           "type": s,
-          "label": "${String.fromCharCode(i + 65)}${j}",
+          "label": "${String.fromCharCode(i + 65)}${j.toString()}",
         });
 
         if (s > 0) {
@@ -251,16 +251,24 @@ class _SeatSelectionState extends State<SeatSelection> {
               child: FloatingActionButton(
                 child: Icon(Icons.credit_card),
                 heroTag: "next",
-                onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => PaymentPage(
-                              bookingDetail: widget.bookingDetail,
-                              movie: widget.movie),
-                          fullscreenDialog: true), (route) {
-                    return route.isFirst;
-                  });
-                },
+                backgroundColor:
+                    seatSelected.length == widget.bookingDetail.totalTicket()
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).disabledColor,
+                onPressed:
+                    seatSelected.length == widget.bookingDetail.totalTicket()
+                        ? () {
+                            widget.bookingDetail.seats = seatSelected;
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentPage(
+                                        bookingDetail: widget.bookingDetail,
+                                        movie: widget.movie),
+                                    fullscreenDialog: true), (route) {
+                              return route.isFirst;
+                            });
+                          }
+                        : null,
               ),
             )
           ],

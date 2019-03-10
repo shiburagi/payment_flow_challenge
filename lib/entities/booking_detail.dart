@@ -14,7 +14,9 @@ class BookingDetail {
   final String time;
   final int adultCount;
   final int childrenCount;
+  final String hall = "Hall 6";
 
+  List seats;
   static const bookingFee = 0.50;
 
   bool validate() {

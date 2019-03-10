@@ -1,56 +1,5 @@
 const movies=[
-    {
-      "Id": "HO00002328",
-      "Name": "A DOG'S WAY HOME",
-      "Rating": "P13",
-      "Name_2": "",
-      "Rating_2": "",
-      "HOFilmCode": "FM00002104",
-      "intFCode": 0,
-      "CinOperator_strCode": "",
-      "CinOperator_Name": "",
-      "MemberMovie": "N",
-      "HOPK": "HO00002328",
-      "intList_Pos": 50,
-      "Detail": {
-        "Categories": "Family/Adventure",
-        "Code": "HO00002328",
-        "Censor": "P13",
-        "Content": "ENGLISH",
-        "Title": "A DOG'S WAY HOME",
-        "Duration": "96",
-        "Film_Casts": [
-          {
-            "PersonType": "A",
-            "FirstName": "Ashley",
-            "LastName": "Judd",
-            "URLToDetails": "",
-            "URLToPicture": ""
-          },
-          {
-            "PersonType": "A",
-            "FirstName": "Jonah",
-            "LastName": "Hauer-King",
-            "URLToDetails": "",
-            "URLToPicture": ""
-          }
-        ],
-        "URL1": "",
-        "URL2": "",
-        "TitleAlt": "",
-        "URLforGraphic": "https://cdn.mbocinemas.com/VISINTERNETTICKETING/Images/Movies/A-Dogs-Way-Home.jpg",
-        "URLforFilmName": "",
-        "URLforTrailer": "https://www.youtube.com/watch?v=1pKdCHvH310",
-        "UpcomingFeatureFlag": "Y",
-        "FeatureFlag": "N",
-        "NowShowingFlag": "N",
-        "Film_dtmOpeningDate": "2019-02-21 00:00:00 AM",
-        "OpeningDate": "Thursday, 21 February 2019",
-        "OpeningYear": "2019",
-        "OpeningWeek": "8",
-        "DescriptionLong": "A female dog travels four hundred miles in search of her owner throughout a Colorado wilderness. "
-      }
-    },
+
     {
       "Id": "HO00001878",
       "Name": "ALITA: BATTLE ANGEL*",
