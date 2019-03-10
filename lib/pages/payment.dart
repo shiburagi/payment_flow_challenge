@@ -170,61 +170,65 @@ class _PaymentPageState extends State<PaymentPage> {
                   constraints: constraint,
                   color: Colors.black,
                 )),
-            SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints:
-                    BoxConstraints(minHeight: constraint.maxHeight - 100),
-                child: Container(
-                  width: constraint.maxWidth,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: <Widget>[
+            Positioned(
+              top:0,
+              bottom: 100,
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints:
+                      BoxConstraints(minHeight: constraint.maxHeight - 200),
+                  child: Container(
+                    width: constraint.maxWidth,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: <Widget>[
 //                          Text("Movie Name : ${widget.movie["Name"]}")
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                            ],
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: <Widget>[
-                            Text("Credit Card"),
-                            OutlineButton(
-                              onPressed: () {},
-                              child: Text("Add Card"),
-                              textColor: Theme.of(context).accentColor,
-                              padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).accentColor),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40))),
-                            )
-                          ],
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text("Credit Card"),
+                              OutlineButton(
+                                onPressed: () {},
+                                child: Text("Add Card"),
+                                textColor: Theme.of(context).accentColor,
+                                padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(40))),
+                              )
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                          padding: EdgeInsets.fromLTRB(16, 12, 16, 24),
                         ),
-                        padding: EdgeInsets.fromLTRB(16, 12, 16, 24),
-                      ),
-                      Container(
-                        height: 200,
-                        child: new Swiper(
-                          itemBuilder: (BuildContext context, int index) {
-                            return CreditCardView();
-                          },
-                          itemCount: 3,
-                          viewportFraction: 0.8,
-                          scale: 0.8,
+                        Container(
+                          height: 200,
+                          child: new Swiper(
+                            itemBuilder: (BuildContext context, int index) {
+                              return CreditCardView();
+                            },
+                            itemCount: 3,
+                            viewportFraction: 0.8,
+                            scale: 0.8,
+                          ),
                         ),
-                      ),
-                      Divider(
-                        height: 48,
-                        color: Colors.white54,
-                      ),
-                      buildSummaryLayout(context, constraint)
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                        Divider(
+                          height: 48,
+                          color: Colors.white54,
+                        ),
+                        buildSummaryLayout(context, constraint)
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
                   ),
                 ),
               ),
