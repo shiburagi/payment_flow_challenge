@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/pages/app.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+
+void main() =>
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown,])
+        .then((_) {
+      runApp(new MyApp());
+    });
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
