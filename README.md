@@ -1,16 +1,54 @@
 # payment_flow_challenge
 
-A new Flutter application.
+![Alt Text](https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/gif/preview-1.gif?raw=true)
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+<div>
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-1.png?raw=true" width="320px"/>
 
-A few resources to get you started if this is your first Flutter project:
+&nbsp;
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-2.png?raw=true" width="320px"/>
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+&nbsp;
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-3.png?raw=true" width="320px"/>
+
+&nbsp;
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-4.png?raw=true" width="320px"/>
+
+
+&nbsp;
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-5.png?raw=true" width="320px"/>
+
+&nbsp;
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-6.png?raw=true" width="320px"/>
+
+
+&nbsp;
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-7.png?raw=true" width="320px"/>
+
+&nbsp;
+
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-8.png?raw=true" width="320px"/>
+
+&nbsp;
+
+
+
+<img src="https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/images/preview-9.png?raw=true" width="320px"/>
+
+
+
+</div>
