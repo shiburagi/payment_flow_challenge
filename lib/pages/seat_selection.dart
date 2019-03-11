@@ -76,9 +76,17 @@ class _SeatSelectionState extends State<SeatSelection> {
   double scale = 1;
   double previousScale = 1;
   double startScale = 1;
+  double currentSizeSize;
 
   @override
   Widget build(BuildContext context) {
+    double width =
+        (MediaQuery.of(context).size.width / seats[0].length < seatSize
+                ? seatSize * seats[0].length
+                : MediaQuery.of(context).size.width) *
+            scale;
+
+    currentSizeSize = width / seats[0].length;
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.bookingDetail.cinema),
@@ -106,14 +114,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                       child: Container(
                         padding: EdgeInsets.only(bottom: 120),
                         height: constraint.maxHeight - 0,
-
                         child: SizedBox(
-                          width: (MediaQuery.of(context).size.width /
-                                          seats[0].length <
-                                      seatSize
-                                  ? seatSize * seats[0].length
-                                  : MediaQuery.of(context).size.width) *
-                              scale,
+                          width: width,
                           child: SingleChildScrollView(
                             child: LayoutBuilder(
                                 builder: (context, constraints) => Column(
@@ -129,9 +131,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                                               border: Border(
                                                   bottom: BorderSide(
                                                       color: Colors.white,
-                                                      width: 2))
-//                              color: Colors.white54,
-                                              ),
+                                                      width: 2))),
                                           child: Text(
                                             "Screen",
                                             style: Theme.of(context)
@@ -151,7 +151,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                                         Container(
                                           height: 40,
                                         ),
-                                        buildSeatLayout(context),
+                                        buildSeatLayout(context, constraints),
                                       ],
                                     )),
                           ),
@@ -165,13 +165,10 @@ class _SeatSelectionState extends State<SeatSelection> {
         ));
   }
 
-  buildSeatLayout(BuildContext context) {
+  buildSeatLayout(BuildContext context, BoxConstraints constraints) {
     return Container(
-      constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height -
-              Scaffold.of(context).widget.appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top -
-              258),
+      constraints:
+          BoxConstraints(maxHeight: currentSizeSize * seats.length + 20),
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: seats[0].length,
