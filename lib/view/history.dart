@@ -29,6 +29,7 @@ class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double itemHeight=180;
+    List<Ticket> tickets= this.tickets.reversed.toList();
     return Container(
       color: Theme.of(context).primaryColor,
       child: LayoutBuilder(builder: (context, constraint) {

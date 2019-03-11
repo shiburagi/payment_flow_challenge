@@ -4,7 +4,7 @@ import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/entities/movie.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
 import 'package:payment_flow_challenge/view/countdown.dart';
-import 'package:payment_flow_challenge/view/pin.dart';
+import 'package:payment_flow_challenge/pages/pin.dart';
 
 class PaymentPage extends StatefulWidget {
   PaymentPage({
@@ -244,7 +244,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           fullscreenDialog: true,
-                          builder: (context) => PinView(
+                          builder: (context) => PinPage(
                                 ticket:
                                     Ticket(widget.movie, widget.bookingDetail),
                               )));

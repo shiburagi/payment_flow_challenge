@@ -4,20 +4,20 @@ import 'package:payment_flow_challenge/action/event.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
 import 'package:sweetalert/sweetalert.dart';
 
-class PinView extends StatefulWidget {
-  PinView({
+class PinPage extends StatefulWidget {
+  PinPage({
     this.ticket,
     Key key,
   }) : super(key: key);
   final Ticket ticket;
 
   @override
-  _PinViewState createState() {
-    return _PinViewState();
+  _PinPageState createState() {
+    return _PinPageState();
   }
 }
 
-class _PinViewState extends State<PinView> {
+class _PinPageState extends State<PinPage> {
   String text = "";
 
   int maxPin = 6;
@@ -46,7 +46,7 @@ class _PinViewState extends State<PinView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(elevation: 0),
       body: LayoutBuilder(builder: (context, constraint) {
         double height = (constraint.maxWidth * 0.8) * 4 / 3;
         return Stack(
