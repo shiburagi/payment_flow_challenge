@@ -24,7 +24,6 @@ class _PinPageState extends State<PinPage> {
 
   buildPinDot() {
     return Container(
-      margin: EdgeInsets.only(top: 48, bottom: 48),
       alignment: Alignment.center,
       child: Row(
         children: List.generate(maxPin, (index) {
@@ -52,13 +51,14 @@ class _PinPageState extends State<PinPage> {
         return Stack(
           children: <Widget>[
             Positioned(
-              top: 0,
+              top: (constraint.maxHeight-height-48)/2,
               bottom: 0,
               child: Container(
                 width: constraint.maxWidth,
                 child: Column(
                   children: <Widget>[
                     buildPinDot(),
+                    Container(height: (constraint.maxHeight-height-48)/4,),
                     Container(
                       height: height,
                       width: constraint.maxWidth * 0.8,
