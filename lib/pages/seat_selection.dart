@@ -18,7 +18,7 @@ class SeatSelection extends StatefulWidget {
 }
 
 class _SeatSelectionState extends State<SeatSelection> {
-  double seatSize = 40;
+  double seatSize = 26;
 
   List<List<int>> seats = [
     [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
@@ -43,6 +43,8 @@ class _SeatSelectionState extends State<SeatSelection> {
 
   List<Map> seatSelected = [];
   List<Map> list = [];
+
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -97,53 +99,65 @@ class _SeatSelectionState extends State<SeatSelection> {
                   });
               },
               onScaleEnd: (s) {},
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * scale,
-                  child: SingleChildScrollView(
-                    child: LayoutBuilder(
-                        builder: (context, constraints) => Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 20,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(bottom: 12),
-                                  width: constraints.maxWidth,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.white, width: 2))
+              child: LayoutBuilder(
+                builder: (context, constraint) => SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      controller: scrollController,
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 120),
+                        height: constraint.maxHeight - 0,
+
+                        child: SizedBox(
+                          width: (MediaQuery.of(context).size.width /
+                                          seats[0].length <
+                                      seatSize
+                                  ? seatSize * seats[0].length
+                                  : MediaQuery.of(context).size.width) *
+                              scale,
+                          child: SingleChildScrollView(
+                            child: LayoutBuilder(
+                                builder: (context, constraints) => Column(
+                                      children: <Widget>[
+                                        Container(
+                                          height: 20,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 12),
+                                          width: constraints.maxWidth,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 2))
 //                              color: Colors.white54,
-                                      ),
-                                  child: Text(
-                                    "Screen",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subhead
-                                        .copyWith(
-                                            fontSize: Theme.of(context)
-                                                    .textTheme
-                                                    .subhead
-                                                    .fontSize *
-                                                scale,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Container(
-                                  height: 40,
-                                ),
-                                buildSeatLayout(context),
-                                Container(
-                                  height: 120,
-                                )
-                              ],
-                            )),
-                  ),
-                ),
+                                              ),
+                                          child: Text(
+                                            "Screen",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subhead
+                                                .copyWith(
+                                                    fontSize: Theme.of(context)
+                                                            .textTheme
+                                                            .subhead
+                                                            .fontSize *
+                                                        scale,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 40,
+                                        ),
+                                        buildSeatLayout(context),
+                                      ],
+                                    )),
+                          ),
+                        ),
+                      ),
+                    ),
               ),
             ),
             Positioned(bottom: 0, child: buildInfoLayout(context))
@@ -152,11 +166,12 @@ class _SeatSelectionState extends State<SeatSelection> {
   }
 
   buildSeatLayout(BuildContext context) {
-    return ConstrainedBox(
+    return Container(
       constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height -
               Scaffold.of(context).widget.appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top),
+              MediaQuery.of(context).padding.top -
+              258),
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: seats[0].length,
@@ -191,7 +206,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                       ? Text(
                           label,
                           style: Theme.of(context).textTheme.caption.copyWith(
-                              fontSize: 10 * scale,
+                              fontSize: 9 * scale,
                               color: isSelected ? Colors.black : Colors.white),
                         )
                       : null,
