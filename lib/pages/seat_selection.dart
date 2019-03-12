@@ -21,30 +21,30 @@ class _SeatSelectionState extends State<SeatSelection> {
   double seatSize = 26;
 
   List<List<int>> seats = [
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 2, 2, 0, 2, 2, 0, 0, 2, 2, 0, 2, 2, 0],
   ];
 
   List<Map> seatSelected = [];
   List<Map> list = [];
 
-  ScrollController scrollController = ScrollController();
+  ScrollController scrollController;
 
   @override
   void initState() {
@@ -76,17 +76,22 @@ class _SeatSelectionState extends State<SeatSelection> {
   double scale = 1;
   double previousScale = 1;
   double startScale = 1;
-  double currentSizeSize;
+  double currentSize;
 
   @override
   Widget build(BuildContext context) {
     double width =
-        (MediaQuery.of(context).size.width / seats[0].length < seatSize
-                ? seatSize * seats[0].length
+        ((MediaQuery.of(context).size.width - 64) / seats[0].length < seatSize
+                ? seatSize * seats[0].length + 64
                 : MediaQuery.of(context).size.width) *
             scale;
 
-    currentSizeSize = width / seats[0].length;
+    double seatLayoutWidth = width - 64;
+
+    currentSize = (seatLayoutWidth) / seats[0].length;
+    if (scrollController == null)
+      scrollController = new ScrollController(
+          initialScrollOffset: (width - MediaQuery.of(context).size.width) / 2);
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.bookingDetail.cinema),
@@ -118,7 +123,12 @@ class _SeatSelectionState extends State<SeatSelection> {
                           width: width,
                           child: SingleChildScrollView(
                             child: LayoutBuilder(
-                                builder: (context, constraints) => Column(
+                              builder: (context, constraints) => Card(
+                                    color: Colors.grey.shade800,
+                                    elevation: 7,
+                                    margin: EdgeInsets.only(
+                                        left: 16, right: 16, top: 24),
+                                    child: Column(
                                       children: <Widget>[
                                         Container(
                                           height: 20,
@@ -130,7 +140,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   bottom: BorderSide(
-                                                      color: Colors.white,
+                                                      color: Colors.white
+                                                          .withOpacity(0.3),
                                                       width: 2))),
                                           child: Text(
                                             "Screen",
@@ -151,9 +162,17 @@ class _SeatSelectionState extends State<SeatSelection> {
                                         Container(
                                           height: 40,
                                         ),
-                                        buildSeatLayout(context, constraints),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: buildSeatLayout(
+                                              context, constraints),
+                                        ),
                                       ],
-                                    )),
+                                      mainAxisSize: MainAxisSize.min,
+                                    ),
+                                  ),
+                            ),
                           ),
                         ),
                       ),
@@ -167,8 +186,7 @@ class _SeatSelectionState extends State<SeatSelection> {
 
   buildSeatLayout(BuildContext context, BoxConstraints constraints) {
     return Container(
-      constraints:
-          BoxConstraints(maxHeight: currentSizeSize * seats.length + 20),
+      constraints: BoxConstraints(maxHeight: currentSize * seats.length + 24),
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: seats[0].length,
