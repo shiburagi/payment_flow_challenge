@@ -63,6 +63,7 @@ class _PinPageState extends State<PinPage> {
                       height: height,
                       width: constraint.maxWidth * 0.8,
                       child: GridView.count(
+                        physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 3,
                         children: List.generate(12, (index) {
                           String text;
