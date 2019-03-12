@@ -124,10 +124,11 @@ class _SeatSelectionState extends State<SeatSelection> {
                           child: SingleChildScrollView(
                             child: LayoutBuilder(
                               builder: (context, constraints) => Card(
-                                    color: Colors.grey.shade800,
+                                    color: Color.fromRGBO(74,84,89, 1),
+//                                    color:Colors.grey.shade800,
                                     elevation: 7,
                                     margin: EdgeInsets.only(
-                                        left: 16, right: 16, top: 24),
+                                        left: 16, right: 16, top: 48),
                                     child: Column(
                                       children: <Widget>[
                                         Container(
