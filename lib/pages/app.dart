@@ -1,4 +1,5 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/action/event.dart';
 import 'package:payment_flow_challenge/dummy/movies.dart';
@@ -24,6 +25,8 @@ class _AppPageState extends State<AppPage> {
     MenuItem(id: "2", title: "History".toUpperCase()),
     MenuItem(id: "3", title: "Promotion".toUpperCase()),
   ];
+
+  bool isDarkMode = true;
 
   @override
   void initState() {
@@ -61,6 +64,35 @@ class _AppPageState extends State<AppPage> {
         color: Theme.of(context).primaryColor.withAlpha(10),
       ),
       menuView: MenuView(
+        headerView: Container(
+          padding: EdgeInsets.fromLTRB(48, 0, 0, 12),
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      color: Theme.of(context).dividerColor, width: 1))),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text(
+                    "Dark Mode".toUpperCase(),
+                    style: Theme.of(context).textTheme.headline,
+                  ),
+                  Switch(
+                    value: isDarkMode,
+                    onChanged: (b) {
+                      setState(() {
+                        isDarkMode = b;
+                        DynamicTheme.of(context).setBrightness(
+                            b ? Brightness.dark : Brightness.light);
+                      });
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
         selectedItemId: selectedMenuItemId,
         menu: Menu(items: items),
         color: Theme.of(context).primaryColor,
