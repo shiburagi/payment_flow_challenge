@@ -78,18 +78,19 @@ class HistoryView extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .subhead
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w700, color: Colors.white),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             "${ticket.bookingDetail.date}",
-                            style: Theme.of(context).textTheme.subhead,
+                            style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white),
+
                           ),
                           Text(ticket.bookingDetail.cinema,
-                              style: Theme.of(context).textTheme.subhead),
+                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
                           Text(seatText,
-                              style: Theme.of(context).textTheme.subhead),
+                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
                           Divider(
                             height: 32,
                             color: Colors.white,
@@ -98,16 +99,16 @@ class HistoryView extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "${ticket.bookingDetail.hall}",
-                                style: Theme.of(context).textTheme.headline,
+                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
                               ),
                               Container(
                                 width: 1,
                                 height: 32,
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.7),
                               ),
                               Text(
                                 "${ticket.bookingDetail.time}",
-                                style: Theme.of(context).textTheme.headline,
+                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
                               ),
                             ],
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
