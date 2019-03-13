@@ -34,7 +34,11 @@ class _BookingPageState extends State<BookingPage> {
   BookingDetail detail;
 
   Color getColor(index) {
-    int color = diffPerTone * totalField + 20 - diffPerTone * (index + 1);
+    int color;
+    if (Theme.of(context).brightness == Brightness.dark)
+      color = diffPerTone * totalField + 20 - diffPerTone * (index + 1);
+    else
+      color = 255 - diffPerTone * totalField + 20 - diffPerTone * (index + 1);
 
     return Color.fromRGBO(color, color, color, 1);
   }
@@ -99,6 +103,7 @@ class _BookingPageState extends State<BookingPage> {
 
     cinemaController.onChanged((v) {
       updateState();
+
     });
 
     hallTypeController.onChanged((v) {

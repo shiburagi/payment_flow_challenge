@@ -19,7 +19,7 @@ class _AppPageState extends State<AppPage> {
   var selectedMenuItemId = '1';
   List<Ticket> tickets = [];
 
-  var items = [
+  List<MenuItem> items = [
     MenuItem(id: "1", title: "Now Showing".toUpperCase()),
     MenuItem(id: "2", title: "History".toUpperCase()),
     MenuItem(id: "3", title: "Promotion".toUpperCase()),
