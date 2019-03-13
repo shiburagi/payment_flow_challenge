@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/pages/payment.dart';
+import 'package:payment_flow_challenge/utils/palette.dart';
 
 class SeatSelection extends StatefulWidget {
   SeatSelection({
@@ -93,6 +94,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       scrollController = new ScrollController(
           initialScrollOffset: (width - MediaQuery.of(context).size.width) / 2);
     return Scaffold(
+//      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         title: Text(widget.bookingDetail.cinema),
         elevation: 0,
@@ -102,7 +104,9 @@ class _SeatSelectionState extends State<SeatSelection> {
         child: Stack(
           children: <Widget>[
             Card(
-              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(0))),
+              elevation: 4,
               color: Theme.of(context).primaryColor,
               margin: EdgeInsets.all(0),
               child: Container(
@@ -125,11 +129,17 @@ class _SeatSelectionState extends State<SeatSelection> {
               onScaleEnd: (s) {},
               child: LayoutBuilder(
                 builder: (context, constraint) => Card(
-                      color: Color.fromRGBO(74, 84, 89, 1),
-//                                    color:Colors.grey.shade800,
-                      elevation: 7,
+                      clipBehavior: Clip.hardEdge,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Color.fromRGBO(74, 84, 89, 1)
+                          : Colors.white,
+                      //                                    color:Colors.grey.shade800,
+                      elevation: 2,
                       margin: EdgeInsets.only(
-                          left: 16, right: 16, top: 8, bottom: 116),
+                          left: 16, right: 16, top: 16, bottom: 116),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         controller: scrollController,
@@ -151,7 +161,9 @@ class _SeatSelectionState extends State<SeatSelection> {
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   bottom: BorderSide(
-                                                      color: Colors.white
+                                                      color: Palette
+                                                              .getContrastColor(
+                                                                  context)
                                                           .withOpacity(0.3),
                                                       width: 2))),
                                           child: Text(
@@ -165,7 +177,9 @@ class _SeatSelectionState extends State<SeatSelection> {
                                                             .subhead
                                                             .fontSize *
                                                         scale,
-                                                    color: Colors.white,
+                                                    color: Palette
+                                                        .getContrastColor(
+                                                            context),
                                                     fontWeight:
                                                         FontWeight.w700),
                                           ),
@@ -180,7 +194,6 @@ class _SeatSelectionState extends State<SeatSelection> {
                                               context, constraints),
                                         ),
                                       ],
-                                      mainAxisSize: MainAxisSize.min,
                                     ),
                               ),
                             ),
@@ -199,7 +212,7 @@ class _SeatSelectionState extends State<SeatSelection> {
 
   buildSeatLayout(BuildContext context, BoxConstraints constraints) {
     return Container(
-      constraints: BoxConstraints(maxHeight: currentSize * seats.length + 24),
+      height: currentSize * seats.length + 24,
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: seats[0].length,
@@ -222,7 +235,10 @@ class _SeatSelectionState extends State<SeatSelection> {
                           ? Theme.of(context).accentColor
                           : Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(color: Colors.white12))
+                      border: Border.all(
+                        color: Palette.getContrastColor(context).withOpacity(0.5),
+                      ),
+                    )
                   : null,
               child: type == 2
                   ? Icon(
@@ -235,7 +251,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                           label,
                           style: Theme.of(context).textTheme.caption.copyWith(
                                 fontSize: 9 * scale,
-//                              color: isSelected ? null : Colors.white,
+                              color: !isSelected ? Palette.getContrastColor(context) : Colors.black,
                               ),
                         )
                       : null,

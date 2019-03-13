@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/components/backdrop_image.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
+import 'package:payment_flow_challenge/utils/custom_clipper.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HistoryView extends StatelessWidget {
@@ -51,9 +52,10 @@ class HistoryView extends StatelessWidget {
     String seatText =
         ticket.bookingDetail.seats.map((seat) => seat["label"]).join(", ");
 
+    BorderSide border = BorderSide(color: Colors.black12, width: 1);
     return Dismissible(
       key: Key("$index"),
-      onDismissed: (direction){},
+      onDismissed: (direction) {},
       child: Container(
         margin: EdgeInsets.all(16),
         child: Row(
@@ -76,18 +78,19 @@ class HistoryView extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .subhead
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w700, color: Colors.white),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             "${ticket.bookingDetail.date}",
-                            style: Theme.of(context).textTheme.subhead,
+                            style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white),
+
                           ),
                           Text(ticket.bookingDetail.cinema,
-                              style: Theme.of(context).textTheme.subhead),
+                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
                           Text(seatText,
-                              style: Theme.of(context).textTheme.subhead),
+                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
                           Divider(
                             height: 32,
                             color: Colors.white,
@@ -96,16 +99,16 @@ class HistoryView extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "${ticket.bookingDetail.hall}",
-                                style: Theme.of(context).textTheme.headline,
+                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
                               ),
                               Container(
                                 width: 1,
                                 height: 32,
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.7),
                               ),
                               Text(
                                 "${ticket.bookingDetail.time}",
-                                style: Theme.of(context).textTheme.headline,
+                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
                               ),
                             ],
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,8 +121,9 @@ class HistoryView extends StatelessWidget {
                 ],
               ),
             ),
-            ClipPath(
+            ClipShadowPath(
               clipper: TopBottomCurveClipper(),
+              shadow: Shadow(color: Colors.grey.shade600),
               child: Container(
                 color: Colors.white,
                 height: itemHeight,
@@ -128,7 +132,10 @@ class HistoryView extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(top: border, bottom: border, right: border),
+              ),
               height: itemHeight,
               alignment: Alignment.center,
               padding: EdgeInsets.only(right: 8),
@@ -139,7 +146,7 @@ class HistoryView extends StatelessWidget {
                     errorCorrectionLevel: 3,
                     size: 64.0,
                     padding: EdgeInsets.all(0),
-                    foregroundColor: Theme.of(context).cardColor,
+                    foregroundColor: Colors.grey.shade800,
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
