@@ -86,19 +86,20 @@ class _SeatSelectionState extends State<SeatSelection> {
                 : MediaQuery.of(context).size.width) *
             scale;
 
-    double seatLayoutWidth = width - 64;
+    double seatLayoutWidth = width - 32;
 
     currentSize = (seatLayoutWidth) / seats[0].length;
     if (scrollController == null)
       scrollController = new ScrollController(
-          initialScrollOffset:
-              (width - MediaQuery.of(context).size.width - 32) / 2);
+          initialScrollOffset: (width - MediaQuery.of(context).size.width) / 2);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.bookingDetail.cinema),
-          elevation: 0,
-        ),
-        body: Stack(
+      appBar: AppBar(
+        title: Text(widget.bookingDetail.cinema),
+        elevation: 0,
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
           children: <Widget>[
             Card(
               elevation: 5,
@@ -134,7 +135,6 @@ class _SeatSelectionState extends State<SeatSelection> {
                         controller: scrollController,
                         child: Container(
 //                          padding: EdgeInsets.only(bottom: 120),
-                          height: constraint.maxHeight - 0,
                           child: SizedBox(
                             width: seatLayoutWidth,
                             child: SingleChildScrollView(
@@ -192,7 +192,9 @@ class _SeatSelectionState extends State<SeatSelection> {
             ),
             Positioned(bottom: 0, child: buildInfoLayout(context))
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   buildSeatLayout(BuildContext context, BoxConstraints constraints) {
@@ -232,9 +234,9 @@ class _SeatSelectionState extends State<SeatSelection> {
                       ? Text(
                           label,
                           style: Theme.of(context).textTheme.caption.copyWith(
-                              fontSize: 9 * scale,
+                                fontSize: 9 * scale,
 //                              color: isSelected ? null : Colors.white,
-                          ),
+                              ),
                         )
                       : null,
             ),
