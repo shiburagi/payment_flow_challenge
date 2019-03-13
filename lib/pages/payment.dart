@@ -3,8 +3,9 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/entities/movie.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
-import 'package:payment_flow_challenge/view/countdown.dart';
 import 'package:payment_flow_challenge/pages/pin.dart';
+import 'package:payment_flow_challenge/utils/palette.dart';
+import 'package:payment_flow_challenge/view/countdown.dart';
 
 class PaymentPage extends StatefulWidget {
   PaymentPage({
@@ -139,7 +140,8 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
           Table(
             border: TableBorder(
-              horizontalInside: BorderSide(width: 1, color: Colors.white54),
+              horizontalInside:
+                  BorderSide(width: 1, color: Palette.getDividerColor(context)),
 //                verticalInside: BorderSide(width: 1, color: Colors.white54),
             ),
             children: children,
@@ -156,7 +158,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        backgroundColor: Colors.black,
+        backgroundColor: Palette.getBackgroundColor(context),
         title: CountDownView(
           minutes: 10,
         ),
@@ -168,10 +170,10 @@ class _PaymentPageState extends State<PaymentPage> {
                 tag: "payment",
                 child: Container(
                   constraints: constraint,
-                  color: Colors.black,
+                  color: Palette.getBackgroundColor(context),
                 )),
             Positioned(
-              top:0,
+              top: 0,
               bottom: 100,
               child: SingleChildScrollView(
                 child: ConstrainedBox(
@@ -223,7 +225,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                         Divider(
                           height: 48,
-                          color: Colors.white54,
+                          color: Palette.getDividerColor(context),
                         ),
                         buildSummaryLayout(context, constraint)
                       ],
@@ -267,7 +269,8 @@ class CreditCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.grey.shade900,
-      elevation: 7,
+      elevation: 4,
+      margin: EdgeInsets.only(bottom: 12),
       child: Container(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -282,7 +285,10 @@ class CreditCardView extends StatelessWidget {
                             .copyWith(color: Colors.white70)),
                     Text(
                       "XXXX XXXXXX XXXXX",
-                      style: Theme.of(context).textTheme.headline,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline
+                          .copyWith(color: Colors.white),
                     ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,7 +306,10 @@ class CreditCardView extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "04/22",
-                          style: Theme.of(context).textTheme.headline,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline
+                              .copyWith(color: Colors.white),
                         ),
                         Image(
                           image: AssetImage("assets/images/visa.png"),

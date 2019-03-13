@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/action/event.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
+import 'package:payment_flow_challenge/utils/palette.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 class PinPage extends StatefulWidget {
@@ -32,8 +33,11 @@ class _PinPageState extends State<PinPage> {
             width: 24,
             height: 24,
             decoration: BoxDecoration(
-                color: index < text.length ? Colors.white : null,
-                border: Border.all(color: Colors.white, width: 2),
+                color: index < text.length
+                    ? Palette.getContrastColor(context)
+                    : null,
+                border: Border.all(
+                    color: Palette.getContrastColor(context), width: 2),
                 borderRadius: BorderRadius.all(Radius.circular(12))),
           );
         }),
@@ -51,14 +55,16 @@ class _PinPageState extends State<PinPage> {
         return Stack(
           children: <Widget>[
             Positioned(
-              top: (constraint.maxHeight-height-48)/2,
+              top: (constraint.maxHeight - height - 48) / 2,
               bottom: 0,
               child: Container(
                 width: constraint.maxWidth,
                 child: Column(
                   children: <Widget>[
                     buildPinDot(),
-                    Container(height: (constraint.maxHeight-height-48)/4,),
+                    Container(
+                      height: (constraint.maxHeight - height - 48) / 4,
+                    ),
                     Container(
                       height: height,
                       width: constraint.maxWidth * 0.8,
