@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:payment_flow_challenge/pages/booking.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
+import 'package:payment_flow_challenge/utils/custom_clipper.dart';
 import 'package:payment_flow_challenge/entities/movie.dart';
 
 class MovieList extends StatelessWidget {
@@ -121,7 +122,7 @@ class MovieList extends StatelessWidget {
       child: Row(
         children: <Widget>[
           ClipShadowPath(
-              shadow: Shadow(), clipper: LeftClipRectClipper(), child: widget),
+              shadow: Shadow(color: Colors.black54), clipper: LeftClipRectClipper(), child: widget),
           Container(
             padding: EdgeInsets.all(12),
             child: Text(

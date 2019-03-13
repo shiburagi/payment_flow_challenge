@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Brightness.dark;
     return MaterialApp(
       theme: ThemeData(
-          brightness: Brightness.dark,
+          brightness: brightness,
           primarySwatch: MaterialColor(
             Colors.white.hashCode,
             <int, Color>{
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
               900: Color(Colors.white.hashCode),
             },
           ),
+          scaffoldBackgroundColor:
+              brightness == Brightness.light ? Colors.grey.shade200 : null,
           accentColor: Color.fromARGB(255, 0, 204, 106),
           fontFamily: "Quicksand"),
       home: AppPage(),
