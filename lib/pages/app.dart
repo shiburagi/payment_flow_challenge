@@ -26,7 +26,6 @@ class _AppPageState extends State<AppPage> {
     MenuItem(id: "3", title: "Promotion".toUpperCase()),
   ];
 
-  bool isDarkMode = true;
 
   @override
   void initState() {
@@ -41,6 +40,9 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isDarkMode = DynamicTheme.of(context).brightness == Brightness.dark;
+
     return DrawerScaffold(
       appBar: AppBarProps(
           title: Text(items
@@ -82,7 +84,6 @@ class _AppPageState extends State<AppPage> {
                     value: isDarkMode,
                     onChanged: (b) {
                       setState(() {
-                        isDarkMode = b;
                         DynamicTheme.of(context).setBrightness(
                             b ? Brightness.dark : Brightness.light);
                       });
