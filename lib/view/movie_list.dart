@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:payment_flow_challenge/entities/movie.dart';
 import 'package:payment_flow_challenge/pages/booking.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
 import 'package:payment_flow_challenge/utils/custom_clipper.dart';
-import 'package:payment_flow_challenge/entities/movie.dart';
 
 class MovieList extends StatelessWidget {
   MovieList({Key key, this.items}) : super(key: key);
@@ -12,12 +12,10 @@ class MovieList extends StatelessWidget {
   static double reserveWidth = imageWidth + 45.0;
 
   Widget itemView(context, movie) {
-
     Widget widget = Container(
       key: Key(movie.id),
       margin: EdgeInsets.only(bottom: 1),
       color: Theme.of(context).primaryColor,
-
       child: Row(
         children: <Widget>[
           Hero(
@@ -121,7 +119,9 @@ class MovieList extends StatelessWidget {
       child: Row(
         children: <Widget>[
           ClipShadowPath(
-              shadow: Shadow(color: Colors.black54), clipper: LeftClipRectClipper(), child: widget),
+              shadow: Shadow(color: Colors.black54),
+              clipper: LeftClipRectClipper(),
+              child: widget),
 //        widget,
           Container(
             padding: EdgeInsets.all(12),
@@ -138,7 +138,7 @@ class MovieList extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor.withAlpha(100),
         border: Border(
-          bottom: BorderSide(color: Theme.of(context).cardColor, width: 1),
+          bottom: BorderSide(color: Theme.of(context).dividerColor, width: 1),
         ),
       ),
     );
@@ -151,7 +151,10 @@ class MovieList extends StatelessWidget {
       itemBuilder: (c, position) {
         var movie = Movie().fromJson(items[position]);
         return GestureDetector(
-          child: itemView(context, movie),
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: itemView(context, movie),
+          ),
           onTap: () {
 //            Navigator.push(context, SlideLeftRoute(widget: BookingPage(title: movie["Name"],)));
             Navigator.push(
