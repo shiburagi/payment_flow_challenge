@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_flow_challenge/dummy/hall.dart';
 import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/pages/payment.dart';
 import 'package:payment_flow_challenge/utils/palette.dart';
@@ -21,36 +22,21 @@ class SeatSelection extends StatefulWidget {
 class _SeatSelectionState extends State<SeatSelection> {
   double seatSize = 26;
 
-  List<List<int>> seats = [
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 2, 0, 2, 2, 0, 0, 2, 2, 0, 2, 2, 0],
-  ];
-
   List<Map> seatSelected = [];
   List<Map> list = [];
 
   ScrollController scrollController;
 
+  int numOfRows = 0;
+  int numOfColumns = 0;
+
   @override
   void initState() {
     super.initState();
     int i = 0;
+    var seats = halls["hall 6"];
+    numOfRows = seats.length;
+    numOfColumns = seats[0].length;
     seats.forEach((seat) {
       bool hasChair = false;
       int j = 1;
@@ -82,14 +68,14 @@ class _SeatSelectionState extends State<SeatSelection> {
   @override
   Widget build(BuildContext context) {
     double width =
-        ((MediaQuery.of(context).size.width - 64) / seats[0].length < seatSize
-                ? seatSize * seats[0].length + 64
+        ((MediaQuery.of(context).size.width - 64) / numOfColumns < seatSize
+                ? seatSize * numOfColumns + 64
                 : MediaQuery.of(context).size.width) *
             scale;
 
     double seatLayoutWidth = width - 32;
 
-    currentSize = (seatLayoutWidth) / seats[0].length;
+    currentSize = (seatLayoutWidth) / numOfColumns;
     if (scrollController == null)
       scrollController = new ScrollController(
           initialScrollOffset: (width - MediaQuery.of(context).size.width) / 2);
@@ -212,10 +198,10 @@ class _SeatSelectionState extends State<SeatSelection> {
 
   buildSeatLayout(BuildContext context, BoxConstraints constraints) {
     return Container(
-      height: currentSize * seats.length + 24,
+      height: currentSize * numOfRows + 24,
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
-        crossAxisCount: seats[0].length,
+        crossAxisCount: numOfColumns,
         children: list.map((item) {
           int type = item["type"];
           String label = item["label"];
@@ -236,7 +222,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                           : Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                       border: Border.all(
-                        color: Palette.getContrastColor(context).withOpacity(0.5),
+                        color:
+                            Palette.getContrastColor(context).withOpacity(0.5),
                       ),
                     )
                   : null,
@@ -251,7 +238,9 @@ class _SeatSelectionState extends State<SeatSelection> {
                           label,
                           style: Theme.of(context).textTheme.caption.copyWith(
                                 fontSize: 9 * scale,
-                              color: !isSelected ? Palette.getContrastColor(context) : Colors.black,
+                                color: !isSelected
+                                    ? Palette.getContrastColor(context)
+                                    : Colors.black,
                               ),
                         )
                       : null,
@@ -278,7 +267,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       child: Card(
         clipBehavior: Clip.hardEdge,
         margin: EdgeInsets.all(0),
-        elevation: 1,
+        elevation: 6,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(0))),
         child: Container(
