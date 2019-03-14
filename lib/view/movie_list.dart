@@ -16,9 +16,8 @@ class MovieList extends StatelessWidget {
     Widget widget = Container(
       key: Key(movie.id),
       margin: EdgeInsets.only(bottom: 1),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
+      color: Theme.of(context).primaryColor,
+
       child: Row(
         children: <Widget>[
           Hero(
@@ -123,6 +122,7 @@ class MovieList extends StatelessWidget {
         children: <Widget>[
           ClipShadowPath(
               shadow: Shadow(color: Colors.black54), clipper: LeftClipRectClipper(), child: widget),
+//        widget,
           Container(
             padding: EdgeInsets.all(12),
             child: Text(
@@ -148,7 +148,7 @@ class MovieList extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget listView = ListView.builder(
       itemCount: items.length,
-      itemBuilder: (context, position) {
+      itemBuilder: (c, position) {
         var movie = Movie().fromJson(items[position]);
         return GestureDetector(
           child: itemView(context, movie),
