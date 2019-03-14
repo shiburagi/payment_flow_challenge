@@ -24,7 +24,6 @@ class ClipShadowPath extends StatelessWidget {
   }
 }
 
-
 class _ClipShadowShadowPainter extends CustomPainter {
   final Shadow shadow;
   final CustomClipper<Path> clipper;
@@ -35,6 +34,7 @@ class _ClipShadowShadowPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var paint = shadow.toPaint();
     canvas.drawPath(clipper.getClip(size), paint);
+
   }
 
   @override
@@ -42,4 +42,3 @@ class _ClipShadowShadowPainter extends CustomPainter {
     return true;
   }
 }
-

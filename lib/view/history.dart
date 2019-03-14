@@ -75,22 +75,29 @@ class HistoryView extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             ticket.movie.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subhead
-                                .copyWith(fontWeight: FontWeight.w700, color: Colors.white),
+                            style: Theme.of(context).textTheme.subhead.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             "${ticket.bookingDetail.date}",
-                            style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white),
-
+                            style: Theme.of(context)
+                                .textTheme
+                                .subhead
+                                .copyWith(color: Colors.white),
                           ),
                           Text(ticket.bookingDetail.cinema,
-                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subhead
+                                  .copyWith(color: Colors.white)),
                           Text(seatText,
-                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subhead
+                                  .copyWith(color: Colors.white)),
                           Divider(
                             height: 32,
                             color: Colors.white,
@@ -99,7 +106,10 @@ class HistoryView extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "${ticket.bookingDetail.hall}",
-                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .copyWith(color: Colors.white),
                               ),
                               Container(
                                 width: 1,
@@ -108,7 +118,10 @@ class HistoryView extends StatelessWidget {
                               ),
                               Text(
                                 "${ticket.bookingDetail.time}",
-                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .copyWith(color: Colors.white),
                               ),
                             ],
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,38 +134,49 @@ class HistoryView extends StatelessWidget {
                 ],
               ),
             ),
-            ClipShadowPath(
-              clipper: TopBottomCurveClipper(),
-              shadow: Shadow(color: Colors.grey.shade600),
-              child: Container(
-                color: Colors.white,
-                height: itemHeight,
-                width: 24,
-                child: dashLine(context, 10, 1, 10, Colors.black54),
-              ),
-            ),
             Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: border, bottom: border, right: border),
-              ),
-              height: itemHeight,
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(right: 8),
-              child: Column(
+              width: 96,
+              child: Stack(
                 children: <Widget>[
-                  QrImage(
-                    data: "tic_$index",
-                    errorCorrectionLevel: 3,
-                    size: 64.0,
-                    padding: EdgeInsets.all(0),
-                    foregroundColor: Colors.grey.shade800,
+                  ClipShadowPath(
+                    clipper: TopBottomCurveClipper(),
+                    shadow: Shadow(color: Colors.grey.shade600),
+                    child: Container(
+                      color: Colors.white,
+                      height: itemHeight,
+                      width: 24,
+                      child: dashLine(context, 10, 1, 10, Colors.black54),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border:
+                            Border(top: border, bottom: border, right: border),
+                      ),
+                      height: itemHeight,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(right: 8),
+                      child: Column(
+                        children: <Widget>[
+                          QrImage(
+                            data: "tic_$index",
+                            errorCorrectionLevel: 3,
+                            size: 64.0,
+                            padding: EdgeInsets.all(0),
+                            foregroundColor: Colors.grey.shade800,
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                      ),
+                    ),
                   ),
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
               ),
-            )
+            ),
           ],
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
