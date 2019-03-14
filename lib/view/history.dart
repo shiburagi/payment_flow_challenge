@@ -49,116 +49,139 @@ class HistoryView extends StatelessWidget {
 
   Widget buildTicket(BuildContext context, BoxConstraints constraint,
       Ticket ticket, int index) {
-    String seatText =
-        ticket.bookingDetail.seats.map((seat) => seat["label"]).join(", ");
-
-    BorderSide border = BorderSide(color: Colors.black12, width: 1);
     return Dismissible(
       key: Key("$index"),
       onDismissed: (direction) {},
       child: Container(
         margin: EdgeInsets.all(16),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Stack(
-                children: <Widget>[
-                  BackdropImage(
-                    image: NetworkImage(ticket.movie.detail.urlforGraphic),
-                    child: Container(
-                      height: itemHeight,
-                      width: 1000,
-                      color: Colors.black38,
-                      padding: EdgeInsets.all(16),
-                      child: Column(
+        child: ClipShadowPath(
+          shadow: Shadow(color: Colors.grey.shade800),
+          clipper: TicketClipper(),
+          child: buildTicketInfo(context, constraint, ticket, index),
+        ),
+      ),
+    );
+  }
+
+  buildTicketInfo(BuildContext context, BoxConstraints constraint,
+      Ticket ticket, int index) {
+    String seatText =
+        ticket.bookingDetail.seats.map((seat) => seat["label"]).join(", ");
+
+    BorderSide border = BorderSide(color: Colors.black12, width: 1);
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Stack(
+            children: <Widget>[
+              BackdropImage(
+                image: NetworkImage(ticket.movie.detail.urlforGraphic),
+                child: Container(
+                  height: itemHeight,
+                  width: 1000,
+                  color: Colors.black38,
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        ticket.movie.name,
+                        style: Theme.of(context).textTheme.subhead.copyWith(
+                            fontWeight: FontWeight.w700, color: Colors.white),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "${ticket.bookingDetail.date}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subhead
+                            .copyWith(color: Colors.white),
+                      ),
+                      Text(ticket.bookingDetail.cinema,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subhead
+                              .copyWith(color: Colors.white)),
+                      Text(seatText,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subhead
+                              .copyWith(color: Colors.white)),
+                      Divider(
+                        height: 32,
+                        color: Colors.white,
+                      ),
+                      Row(
                         children: <Widget>[
                           Text(
-                            ticket.movie.name,
+                            "${ticket.bookingDetail.hall}",
                             style: Theme.of(context)
                                 .textTheme
-                                .subhead
-                                .copyWith(fontWeight: FontWeight.w700, color: Colors.white),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                                .headline
+                                .copyWith(color: Colors.white),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 32,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           Text(
-                            "${ticket.bookingDetail.date}",
-                            style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white),
-
+                            "${ticket.bookingDetail.time}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline
+                                .copyWith(color: Colors.white),
                           ),
-                          Text(ticket.bookingDetail.cinema,
-                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
-                          Text(seatText,
-                              style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)),
-                          Divider(
-                            height: 32,
-                            color: Colors.white,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "${ticket.bookingDetail.hall}",
-                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 32,
-                                color: Colors.white.withOpacity(0.7),
-                              ),
-                              Text(
-                                "${ticket.bookingDetail.time}",
-                                style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
-                              ),
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          )
                         ],
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      ),
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      )
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
                   ),
-                ],
+                ),
               ),
-            ),
-            ClipShadowPath(
-              clipper: TopBottomCurveClipper(),
-              shadow: Shadow(color: Colors.grey.shade600),
-              child: Container(
+            ],
+          ),
+        ),
+        Container(
+          width: 96,
+          child: Row(
+            children: <Widget>[
+              Container(
                 color: Colors.white,
                 height: itemHeight,
                 width: 24,
                 child: dashLine(context, 10, 1, 10, Colors.black54),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: border, bottom: border, right: border),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                height: itemHeight,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(right: 8),
+                child: Column(
+                  children: <Widget>[
+                    QrImage(
+                      data: "tic_$index",
+                      errorCorrectionLevel: 3,
+                      size: 64.0,
+                      padding: EdgeInsets.all(0),
+                      foregroundColor: Colors.grey.shade800,
+                    ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                ),
               ),
-              height: itemHeight,
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(right: 8),
-              child: Column(
-                children: <Widget>[
-                  QrImage(
-                    data: "tic_$index",
-                    errorCorrectionLevel: 3,
-                    size: 64.0,
-                    padding: EdgeInsets.all(0),
-                    foregroundColor: Colors.grey.shade800,
-                  ),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-              ),
-            )
-          ],
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
+            ],
+          ),
         ),
-      ),
+      ],
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
     );
   }
 }
