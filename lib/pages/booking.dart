@@ -36,14 +36,18 @@ class _BookingPageState extends State<BookingPage> {
   Color getColor(index) {
     int color;
     if (Theme.of(context).brightness == Brightness.dark)
-      color = diffPerTone * totalField + 20 - (diffPerTone * (index + 1) as int);
+      color =
+          diffPerTone * totalField + 20 - (diffPerTone * (index + 1) as int);
     else
-      color = 255 - diffPerTone * totalField + 20 - (diffPerTone * (index + 1) as int);
+      color = 255 -
+          diffPerTone * totalField +
+          20 -
+          (diffPerTone * (index + 1) as int);
 
     return Color.fromRGBO(color, color, color, 1);
   }
 
-  Widget itemContainer(context, constraints,
+  Widget itemContainer(context,
       {child, required int index, colorIndex, int span = 1}) {
     double top = (itemHeight - radius) * index + 0;
     return Container(
@@ -53,7 +57,6 @@ class _BookingPageState extends State<BookingPage> {
           padding: EdgeInsets.only(top: 16, left: 8, right: 8),
           height: (itemHeight - radius) * span + radius,
           color: getColor(colorIndex),
-          width: constraints.maxWidth,
           child: child,
         ),
         borderRadius: BorderRadius.only(topRight: Radius.circular(24)),
@@ -61,10 +64,10 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  buildPreview(BuildContext context, BoxConstraints constraints) {
+  buildPreview(BuildContext context) {
     Image image = Image.network(
       widget.movie.detail.urlforGraphic,
-      width: constraints.maxWidth,
+      width: MediaQuery.of(context).size.width,
       fit: BoxFit.fitHeight,
     );
     return BackdropImage(
@@ -103,7 +106,6 @@ class _BookingPageState extends State<BookingPage> {
 
     cinemaController.onChanged((v) {
       updateState();
-
     });
 
     hallTypeController.onChanged((v) {
@@ -139,138 +141,136 @@ class _BookingPageState extends State<BookingPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.movie.name),
+          iconTheme: IconThemeData(color: Theme.of(context).hintColor),
+          textTheme: Theme.of(context).textTheme,
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0,
         ),
         backgroundColor: getColor(totalField - 1),
-        body: LayoutBuilder(
-          builder: (context, constraints) => Container(
-                height: constraints.maxHeight,
-                color: getColor(totalField - 1),
-                child: Stack(
-                  children: <Widget>[
-                    Container(
-                      width: constraints.maxHeight,
-                      child: SingleChildScrollView(
-                        child: Container(
+        body: Container(
+          color: getColor(totalField - 1),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                child: SingleChildScrollView(
+                  child: Container(
+                    child: Stack(
+                      children: <Widget>[
+                        buildPreview(context),
+                        Container(
+                          margin: EdgeInsets.only(top: 280 - radius),
                           child: Stack(
                             children: <Widget>[
-                              buildPreview(context, constraints),
-                              Container(
-                                margin: EdgeInsets.only(top: 280 - radius),
-                                child: Stack(
+                              itemContainer(
+                                context,
+                                index: 0,
+                                colorIndex: 0,
+                                span: 4,
+                                child: Column(
                                   children: <Widget>[
-                                    itemContainer(
-                                      context,
-                                      constraints,
-                                      index: 0,
-                                      colorIndex: 0,
-                                      span: 4,
-                                      child: Column(
-                                        children: <Widget>[
-                                          DropDown(
-                                            controller: cinemaController,
-                                            hint: "Cinema",
-                                            items: [
-                                              "IOI Mall",
-                                              "Mid Valley",
-                                              "Nu Sentral",
-                                              "Paradigm Mall",
-                                            ],
-                                          ),
-                                          DropDown(
-                                            controller: hallTypeController,
-                                            hint: "Hall Type",
-                                            items: [
-                                              "ATMOS",
-                                              "3D",
-                                              "Normal",
-                                            ],
-                                          ),
-                                          DropDown(
-                                            controller: dateController,
-                                            hint: "Date",
-                                            items: [
-                                              "Tue - Mar 05, 2019",
-                                              "Wed - Mar 06, 2019",
-                                              "Thu - Mar 07, 2019",
-                                              "Fri - Mar 08, 2019",
-                                            ],
-                                          ),
-                                          DropDown(
-                                            controller: timeController,
-                                            hint: "Time",
-                                            items: [
-                                              "12:00 PM",
-                                              "3:30 PM",
-                                              "7:00 PM",
-                                            ],
-                                          ),
-                                          Container(
-                                            height: radius,
-                                          )
-                                        ],
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                      ),
+                                    DropDown(
+                                      controller: cinemaController,
+                                      hint: "Cinema",
+                                      items: [
+                                        "IOI Mall",
+                                        "Mid Valley",
+                                        "Nu Sentral",
+                                        "Paradigm Mall",
+                                      ],
                                     ),
-                                    itemContainer(
-                                      context,
-                                      constraints,
-                                      index: 4,
-                                      span: 2,
-                                      colorIndex: 1,
-                                      child: Column(
-                                        children: <Widget>[
-                                          NumberTextInput(
-                                            hintText: "Adult",
-                                            controller: adultController,
-                                          ),
-//
-                                          NumberTextInput(
-                                            hintText: "Children",
-                                            controller: childrenController,
-                                          ),
-                                          Container(
-                                            height: radius,
-                                          )
-                                        ],
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                      ),
+                                    DropDown(
+                                      controller: hallTypeController,
+                                      hint: "Hall Type",
+                                      items: [
+                                        "ATMOS",
+                                        "3D",
+                                        "Normal",
+                                      ],
+                                    ),
+                                    DropDown(
+                                      controller: dateController,
+                                      hint: "Date",
+                                      items: [
+                                        "Tue - Mar 05, 2019",
+                                        "Wed - Mar 06, 2019",
+                                        "Thu - Mar 07, 2019",
+                                        "Fri - Mar 08, 2019",
+                                      ],
+                                    ),
+                                    DropDown(
+                                      controller: timeController,
+                                      hint: "Time",
+                                      items: [
+                                        "12:00 PM",
+                                        "3:30 PM",
+                                        "7:00 PM",
+                                      ],
                                     ),
                                     Container(
-                                      height: constraints.maxHeight,
+                                      height: radius,
                                     )
                                   ],
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                 ),
                               ),
+                              itemContainer(
+                                context,
+                                index: 4,
+                                span: 2,
+                                colorIndex: 1,
+                                child: Column(
+                                  children: <Widget>[
+                                    NumberTextInput(
+                                      hintText: "Adult",
+                                      controller: adultController,
+                                    ),
+//
+                                    NumberTextInput(
+                                      hintText: "Children",
+                                      controller: childrenController,
+                                    ),
+                                    Container(
+                                      height: radius,
+                                    )
+                                  ],
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                ),
+                              ),
+                              Container()
                             ],
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Positioned(
-                        bottom: 24,
-                        left: constraints.maxWidth / 2 - 24,
-                        child: FloatingActionButton(
-                          child: Icon(Icons.event_seat),
-                          heroTag: "next",
-                          backgroundColor: detail!.validate()
-                              ? Theme.of(context).accentColor
-                              : Theme.of(context).disabledColor,
-                          onPressed: detail!.validate()
-                              ? () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      fullscreenDialog: true,
-                                      builder: (context) => SeatSelection(
-                                          movie: widget.movie,
-                                          bookingDetail: detail)));
-                                }
-                              : null,
-                        )),
-                  ],
+                  ),
                 ),
               ),
+              Positioned(
+                  bottom: 24,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: FloatingActionButton(
+                      child: Icon(Icons.event_seat),
+                      heroTag: "next",
+                      backgroundColor: detail!.validate()
+                          ? Theme.of(context).accentColor
+                          : Theme.of(context).disabledColor,
+                      onPressed: detail!.validate()
+                          ? () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) => SeatSelection(
+                                      movie: widget.movie,
+                                      bookingDetail: detail)));
+                            }
+                          : null,
+                    ),
+                  )),
+            ],
+          ),
         ));
   }
 }
