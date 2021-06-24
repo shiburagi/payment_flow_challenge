@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 @immutable
 class ClipBorderPath extends StatelessWidget {
   ClipBorderPath({
-    @required this.border,
-    @required this.clipper,
-    @required this.child,
+    required this.border,
+    required this.clipper,
+    required this.child,
   });
 
   final Border border;
@@ -28,7 +28,7 @@ class _ClipShadowShadowPainter extends CustomPainter {
   final Border border;
   final CustomClipper<Path> clipper;
 
-  _ClipShadowShadowPainter({@required this.border, @required this.clipper});
+  _ClipShadowShadowPainter({required this.border, required this.clipper});
 
   @override
   void paint(Canvas canvas, Size size) {

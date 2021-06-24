@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_flow_challenge/bloc/ticket.dart';
 import 'package:payment_flow_challenge/components/backdrop_image.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
 import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
@@ -6,8 +8,7 @@ import 'package:payment_flow_challenge/utils/custom_clipper.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HistoryView extends StatelessWidget {
-  HistoryView({this.tickets = const [], Key key}) : super(key: key);
-  final List<Ticket> tickets;
+  const HistoryView({Key? key}) : super(key: key);
 
   dashLine(context, dashCount, double width, double height, color) {
     return Container(
@@ -27,24 +28,36 @@ class HistoryView extends StatelessWidget {
     );
   }
 
-  double itemHeight = 180;
+  final double itemHeight = 180;
 
   @override
   Widget build(BuildContext context) {
-    List<Ticket> tickets = this.tickets.reversed.toList();
-    return Container(
-      color: Theme.of(context).primaryColor,
-      child: LayoutBuilder(builder: (context, constraint) {
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            Ticket ticket = tickets[index];
+    return BlocBuilder<TicketBloc, TicketState>(builder: (context, state) {
+      List<Ticket> tickets = state.tickets?.reversed.toList() ?? [];
 
-            return buildTicket(context, constraint, ticket, index);
-          },
-          itemCount: tickets.length,
-        );
-      }),
-    );
+      return tickets.isEmpty
+          ? Center(
+              child: Text(
+              "No result found.",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(color: Theme.of(context).disabledColor),
+            ))
+          : Container(
+              color: Theme.of(context).primaryColor,
+              child: LayoutBuilder(builder: (context, constraint) {
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    Ticket ticket = tickets[index];
+
+                    return buildTicket(context, constraint, ticket, index);
+                  },
+                  itemCount: tickets.length,
+                );
+              }),
+            );
+    });
   }
 
   Widget buildTicket(BuildContext context, BoxConstraints constraint,
@@ -66,9 +79,8 @@ class HistoryView extends StatelessWidget {
   buildTicketInfo(BuildContext context, BoxConstraints constraint,
       Ticket ticket, int index) {
     String seatText =
-        ticket.bookingDetail.seats.map((seat) => seat["label"]).join(", ");
+        ticket.bookingDetail!.seats.map((seat) => seat["label"]).join(", ");
 
-    BorderSide border = BorderSide(color: Colors.black12, width: 1);
     return Row(
       children: <Widget>[
         Expanded(
@@ -76,7 +88,7 @@ class HistoryView extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               BackdropImage(
-                image: NetworkImage(ticket.movie.detail.urlforGraphic),
+                image: NetworkImage(ticket.movie!.detail.urlforGraphic!),
                 child: Container(
                   height: itemHeight,
                   width: 1000,
@@ -85,28 +97,28 @@ class HistoryView extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        ticket.movie.name,
-                        style: Theme.of(context).textTheme.subhead.copyWith(
+                        ticket.movie!.name!,
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontWeight: FontWeight.w700, color: Colors.white),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "${ticket.bookingDetail.date}",
+                        "${ticket.bookingDetail!.date}",
                         style: Theme.of(context)
                             .textTheme
-                            .subhead
+                            .subtitle1!
                             .copyWith(color: Colors.white),
                       ),
-                      Text(ticket.bookingDetail.cinema,
+                      Text(ticket.bookingDetail!.cinema!,
                           style: Theme.of(context)
                               .textTheme
-                              .subhead
+                              .subtitle1!
                               .copyWith(color: Colors.white)),
                       Text(seatText,
                           style: Theme.of(context)
                               .textTheme
-                              .subhead
+                              .subtitle1!
                               .copyWith(color: Colors.white)),
                       Divider(
                         height: 32,
@@ -115,10 +127,10 @@ class HistoryView extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            "${ticket.bookingDetail.hall}",
+                            "${ticket.bookingDetail!.hall}",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline
+                                .headline5!
                                 .copyWith(color: Colors.white),
                           ),
                           Container(
@@ -127,10 +139,10 @@ class HistoryView extends StatelessWidget {
                             color: Colors.white.withOpacity(0.7),
                           ),
                           Text(
-                            "${ticket.bookingDetail.time}",
+                            "${ticket.bookingDetail!.time}",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline
+                                .headline5!
                                 .copyWith(color: Colors.white),
                           ),
                         ],

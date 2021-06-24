@@ -8,10 +8,10 @@ class SeatSelection extends StatefulWidget {
   SeatSelection({
     this.movie,
     this.bookingDetail,
-    Key key,
+    Key? key,
   }) : super(key: key);
   final movie;
-  final BookingDetail bookingDetail;
+  final BookingDetail? bookingDetail;
 
   @override
   _SeatSelectionState createState() {
@@ -25,7 +25,7 @@ class _SeatSelectionState extends State<SeatSelection> {
   List<Map> seatSelected = [];
   List<Map> list = [];
 
-  ScrollController scrollController;
+  ScrollController? scrollController;
 
   int numOfRows = 0;
   int numOfColumns = 0;
@@ -34,7 +34,7 @@ class _SeatSelectionState extends State<SeatSelection> {
   void initState() {
     super.initState();
     int i = 0;
-    var seats = halls["hall 6"];
+    var seats = halls["hall 6"]!;
     numOfRows = seats.length;
     numOfColumns = seats[0].length;
     seats.forEach((seat) {
@@ -63,7 +63,7 @@ class _SeatSelectionState extends State<SeatSelection> {
   double scale = 1;
   double previousScale = 1;
   double startScale = 1;
-  double currentSize;
+  late double currentSize;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Scaffold(
 //      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Text(widget.bookingDetail.cinema),
+        title: Text(widget.bookingDetail!.cinema!),
         elevation: 0,
       ),
       body: Container(
@@ -94,7 +94,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                   borderRadius: BorderRadius.all(Radius.circular(0))),
               elevation: 4,
               color: Theme.of(context).primaryColor,
-              margin: EdgeInsets.all(0),
+              margin: EdgeInsets.zero,
               child: Container(
                 height: 60,
               ),
@@ -115,78 +115,76 @@ class _SeatSelectionState extends State<SeatSelection> {
               onScaleEnd: (s) {},
               child: LayoutBuilder(
                 builder: (context, constraint) => Card(
-                      clipBehavior: Clip.hardEdge,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? Color.fromRGBO(74, 84, 89, 1)
-                          : Colors.white,
-                      //                                    color:Colors.grey.shade800,
-                      elevation: 2,
-                      margin: EdgeInsets.only(
-                          left: 16, right: 16, top: 16, bottom: 116),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        controller: scrollController,
-                        child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Color.fromRGBO(74, 84, 89, 1)
+                      : Colors.white,
+                  //                                    color:Colors.grey.shade800,
+                  elevation: 2,
+                  margin: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: 126 + MediaQuery.of(context).padding.bottom),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: scrollController,
+                    child: Container(
 //                          padding: EdgeInsets.only(bottom: 120),
-                          child: SizedBox(
-                            width: seatLayoutWidth,
-                            child: SingleChildScrollView(
-                              child: LayoutBuilder(
-                                builder: (context, constraints) => Column(
-                                      children: <Widget>[
-                                        Container(
-                                          height: 20,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(bottom: 12),
-                                          width: constraints.maxWidth,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                                      color: Palette
-                                                              .getContrastColor(
-                                                                  context)
-                                                          .withOpacity(0.3),
-                                                      width: 2))),
-                                          child: Text(
-                                            "Screen",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subhead
-                                                .copyWith(
-                                                    fontSize: Theme.of(context)
-                                                            .textTheme
-                                                            .subhead
-                                                            .fontSize *
-                                                        scale,
-                                                    color: Palette
-                                                        .getContrastColor(
-                                                            context),
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 40,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              left: 16, right: 16),
-                                          child: buildSeatLayout(
-                                              context, constraints),
-                                        ),
-                                      ],
-                                    ),
-                              ),
+                      child: SizedBox(
+                        width: seatLayoutWidth,
+                        child: SingleChildScrollView(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) => Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 20,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  width: constraints.maxWidth,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Palette.getContrastColor(
+                                                      context)
+                                                  .withOpacity(0.3),
+                                              width: 2))),
+                                  child: Text(
+                                    "Screen",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                            fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1!
+                                                    .fontSize! *
+                                                scale,
+                                            color: Palette.getContrastColor(
+                                                context),
+                                            fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 16, right: 16),
+                                  child: buildSeatLayout(context, constraints),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
+                  ),
+                ),
               ),
             ),
             Positioned(bottom: 0, child: buildInfoLayout(context))
@@ -196,15 +194,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     );
   }
 
-  buildSeatLayout(BuildContext context, BoxConstraints constraints) {
+  Widget buildSeatLayout(BuildContext context, BoxConstraints constraints) {
     return Container(
       height: currentSize * numOfRows + 24,
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: numOfColumns,
         children: list.map((item) {
-          int type = item["type"];
-          String label = item["label"];
+          int? type = item["type"];
+          String? label = item["label"];
           bool isSelected = seatSelected.contains(item);
           return GestureDetector(
             onTap: () {
@@ -235,8 +233,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                     )
                   : type == 1
                       ? Text(
-                          label,
-                          style: Theme.of(context).textTheme.caption.copyWith(
+                          label!,
+                          style: Theme.of(context).textTheme.caption!.copyWith(
                                 fontSize: 9 * scale,
                                 color: !isSelected
                                     ? Palette.getContrastColor(context)
@@ -256,82 +254,94 @@ class _SeatSelectionState extends State<SeatSelection> {
       int i = seatSelected.indexOf(seat);
       if (i != -1)
         seatSelected.remove(seat);
-      else if (widget.bookingDetail.totalTicket() > seatSelected.length)
+      else if (widget.bookingDetail!.totalTicket() > seatSelected.length)
         seatSelected.add(seat);
     });
   }
 
-  buildInfoLayout(BuildContext context) {
-    return Hero(
-      tag: "payment",
-      child: Card(
-        clipBehavior: Clip.hardEdge,
-        margin: EdgeInsets.all(0),
-        elevation: 6,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0))),
-        child: Container(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.black
-              : Colors.white,
-          height: 120,
-          padding: EdgeInsets.only(bottom: 24, top: 24, left: 24, right: 24),
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "Seat${addS(seatSelected.length)} selected : ${seatSelected.length}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle
-                            .copyWith(fontWeight: FontWeight.w700),
+  Widget buildInfoLayout(BuildContext context) {
+    return Stack(
+      children: [
+        Hero(
+          tag: "payment",
+          child: Card(
+            clipBehavior: Clip.hardEdge,
+            margin: EdgeInsets.all(0),
+            elevation: 6,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0))),
+            child: SafeArea(
+              child: Container(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.black
+                    : Colors.white,
+                height: 120,
+                padding:
+                    EdgeInsets.only(bottom: 24, top: 24, left: 24, right: 72),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Seat${addS(seatSelected.length)} selected : ${seatSelected.length}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                                "Requested seat${addS(widget.bookingDetail!.totalTicket())} : ${widget.bookingDetail!.totalTicket()}",
+                                style: Theme.of(context).textTheme.subtitle2),
+                            Container(
+                              height: 2,
+                            ),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
                       ),
-                      Text(
-                          "Requested seat${addS(widget.bookingDetail.totalTicket())} : ${widget.bookingDetail.totalTicket()}",
-                          style: Theme.of(context).textTheme.subtitle),
-                      Container(
-                        height: 2,
-                      ),
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
+                      flex: 1,
+                    ),
+                  ],
                 ),
-                flex: 1,
               ),
-              Container(
-                child: FloatingActionButton(
-                  child: Icon(Icons.credit_card),
-                  heroTag: "next",
-                  backgroundColor:
-                      seatSelected.length == widget.bookingDetail.totalTicket()
-                          ? Theme.of(context).accentColor
-                          : Theme.of(context).disabledColor,
-                  onPressed:
-                      seatSelected.length == widget.bookingDetail.totalTicket()
-                          ? () {
-                              widget.bookingDetail.seats = seatSelected;
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) => PaymentPage(
-                                          bookingDetail: widget.bookingDetail,
-                                          movie: widget.movie),
-                                      fullscreenDialog: true), (route) {
-                                return route.isFirst;
-                              });
-                            }
-                          : null,
-                ),
-              )
-            ],
+            ),
           ),
         ),
-      ),
+        Positioned(
+          right: 16,
+          bottom: 0,
+          top: 0,
+          child: Container(
+            child: FloatingActionButton(
+              child: Icon(Icons.credit_card),
+              heroTag: "next",
+              backgroundColor:
+                  seatSelected.length == widget.bookingDetail!.totalTicket()
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).disabledColor,
+              onPressed:
+                  seatSelected.length == widget.bookingDetail!.totalTicket()
+                      ? () {
+                          widget.bookingDetail!.seats = seatSelected;
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => PaymentPage(
+                                      bookingDetail: widget.bookingDetail,
+                                      movie: widget.movie),
+                                  fullscreenDialog: true), (route) {
+                            return route.isFirst;
+                          });
+                        }
+                      : null,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_flow_challenge/action/event.dart';
+import 'package:payment_flow_challenge/bloc/ticket.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
 import 'package:payment_flow_challenge/utils/palette.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -8,9 +10,9 @@ import 'package:sweetalert/sweetalert.dart';
 class PinPage extends StatefulWidget {
   PinPage({
     this.ticket,
-    Key key,
+    Key? key,
   }) : super(key: key);
-  final Ticket ticket;
+  final Ticket? ticket;
 
   @override
   _PinPageState createState() {
@@ -72,20 +74,20 @@ class _PinPageState extends State<PinPage> {
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 3,
                         children: List.generate(12, (index) {
-                          String text;
-                          Widget child;
+                          late String text;
+                          Widget? child;
                           Color color = Theme.of(context).primaryColor;
                           if (index < 9) {
                             text = "${index + 1}";
                             child = Text(
                               text,
-                              style: Theme.of(context).textTheme.headline,
+                              style: Theme.of(context).textTheme.headline5,
                             );
                           } else if (index == 10) {
                             text = "0";
                             child = Text(
                               text,
-                              style: Theme.of(context).textTheme.headline,
+                              style: Theme.of(context).textTheme.headline5,
                             );
                           } else if (index == 9) {
                             color = Theme.of(context).errorColor;
@@ -124,10 +126,12 @@ class _PinPageState extends State<PinPage> {
                                         confirmButtonColor:
                                             Theme.of(context).accentColor,
                                         onPress: (b) {
-                                          eventBus.fire(widget.ticket);
+                                          context
+                                              .read<TicketBloc>()
+                                              .addTicket(widget.ticket!);
                                           Navigator.of(context).pop();
                                           Navigator.of(context).pop();
-                                        },
+                                        } as bool Function(bool),
                                       );
                                     }
                                   } else if (this.text.isNotEmpty &&

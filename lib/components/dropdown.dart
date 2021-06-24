@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
-  DropDown({this.items, this.hint, this.controller, Key key}) : super(key: key);
+  DropDown({this.items, this.hint, this.controller, Key? key})
+      : super(key: key);
 
-  final String hint;
-  final List items;
-  final DropDownController controller;
+  final String? hint;
+  final List? items;
+  final DropDownController? controller;
 
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +20,7 @@ class _DropDownState extends State<DropDown> {
 
   @override
   Widget build(BuildContext context) {
-    DropDownController controller = widget?.controller ?? defaultController;
+    DropDownController controller = widget.controller ?? defaultController;
 
     var border = OutlineInputBorder(
       borderSide: BorderSide(
@@ -29,20 +30,20 @@ class _DropDownState extends State<DropDown> {
     );
     return DropdownButtonFormField<String>(
       value: controller.value,
-      hint: Text(widget.hint),
+      hint: Text(widget.hint!),
       decoration: InputDecoration(
         contentPadding:
             EdgeInsets.only(left: 70, right: 12, top: 16, bottom: 16),
         border: border,
         enabledBorder: border,
       ),
-      onChanged: (String newValue) {
+      onChanged: (String? newValue) {
         controller.onChanged(newValue);
         setState(() {
           controller.value = newValue;
         });
       },
-      items: (widget.items).map((value) {
+      items: widget.items!.map((value) {
         return DropdownMenuItem<String>(
           value: value.toString(),
           child: Text(value),
@@ -55,7 +56,7 @@ class _DropDownState extends State<DropDown> {
 class DropDownController<T> {
   DropDownController({this.value});
 
-  String value;
+  String? value;
 
   ValueChanged<T> onChanged = (t) {};
 }
