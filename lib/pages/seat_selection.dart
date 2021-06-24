@@ -83,6 +83,8 @@ class _SeatSelectionState extends State<SeatSelection> {
 //      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         title: Text(widget.bookingDetail!.cinema!),
+        textTheme: Theme.of(context).textTheme,
+        backgroundColor: Theme.of(context).cardColor,
         elevation: 0,
       ),
       body: Container(
@@ -93,7 +95,7 @@ class _SeatSelectionState extends State<SeatSelection> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(0))),
               elevation: 4,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).cardColor,
               margin: EdgeInsets.zero,
               child: Container(
                 height: 60,
@@ -113,73 +115,68 @@ class _SeatSelectionState extends State<SeatSelection> {
                   });
               },
               onScaleEnd: (s) {},
-              child: LayoutBuilder(
-                builder: (context, constraint) => Card(
-                  clipBehavior: Clip.hardEdge,
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Color.fromRGBO(74, 84, 89, 1)
-                      : Colors.white,
-                  //                                    color:Colors.grey.shade800,
-                  elevation: 2,
-                  margin: EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 16,
-                      bottom: 126 + MediaQuery.of(context).padding.bottom),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    controller: scrollController,
-                    child: Container(
+              child: Card(
+                clipBehavior: Clip.hardEdge,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Color.fromRGBO(74, 84, 89, 1)
+                    : Colors.white,
+                //                                    color:Colors.grey.shade800,
+                elevation: 2,
+                margin: EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 16,
+                    bottom: 126 + MediaQuery.of(context).padding.bottom),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  controller: scrollController,
+                  child: Container(
 //                          padding: EdgeInsets.only(bottom: 120),
-                      child: SizedBox(
-                        width: seatLayoutWidth,
-                        child: SingleChildScrollView(
-                          child: LayoutBuilder(
-                            builder: (context, constraints) => Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 20,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(bottom: 12),
-                                  width: constraints.maxWidth,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Palette.getContrastColor(
-                                                      context)
-                                                  .withOpacity(0.3),
-                                              width: 2))),
-                                  child: Text(
-                                    "Screen",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1!
-                                        .copyWith(
-                                            fontSize: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1!
-                                                    .fontSize! *
-                                                scale,
-                                            color: Palette.getContrastColor(
-                                                context),
-                                            fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Container(
-                                  height: 40,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 16, right: 16),
-                                  child: buildSeatLayout(context, constraints),
-                                ),
-                              ],
+                    child: SizedBox(
+                      width: seatLayoutWidth,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 20,
                             ),
-                          ),
+                            Container(
+                              padding: EdgeInsets.only(bottom: 12),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color:
+                                              Palette.getContrastColor(context)
+                                                  .withOpacity(0.3),
+                                          width: 2))),
+                              child: Text(
+                                "Screen",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        fontSize: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .fontSize! *
+                                            scale,
+                                        color:
+                                            Palette.getContrastColor(context),
+                                        fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 16, right: 16),
+                              child: buildSeatLayout(context),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -194,7 +191,7 @@ class _SeatSelectionState extends State<SeatSelection> {
     );
   }
 
-  Widget buildSeatLayout(BuildContext context, BoxConstraints constraints) {
+  Widget buildSeatLayout(BuildContext context) {
     return Container(
       height: currentSize * numOfRows + 24,
       child: GridView.count(
@@ -217,7 +214,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                   ? BoxDecoration(
                       color: isSelected
                           ? Theme.of(context).accentColor
-                          : Theme.of(context).primaryColor,
+                          : Theme.of(context).cardColor,
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                       border: Border.all(
                         color:

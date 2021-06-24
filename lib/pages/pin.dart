@@ -76,7 +76,7 @@ class _PinPageState extends State<PinPage> {
                         children: List.generate(12, (index) {
                           late String text;
                           Widget? child;
-                          Color color = Theme.of(context).primaryColor;
+                          Color color = Theme.of(context).cardColor;
                           if (index < 9) {
                             text = "${index + 1}";
                             child = Text(

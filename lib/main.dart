@@ -33,12 +33,15 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<SettingBloc, SettingState>(
         builder: (context, state) {
-          return MaterialApp(
-            themeMode: state.mode,
-            theme: createTheme(scaffoldBackgroundColor: Colors.grey.shade200),
-            darkTheme: createTheme(brightness: Brightness.dark),
-            home: AppPage(),
-            debugShowCheckedModeBanner: false,
+          return Center(
+            child: MaterialApp(
+              themeMode: state.mode,
+              theme: createTheme(scaffoldBackgroundColor: Colors.grey.shade200),
+              darkTheme: createTheme(
+                  brightness: Brightness.dark, cardColor: Colors.grey.shade900),
+              home: AppPage(),
+              debugShowCheckedModeBanner: false,
+            ),
           );
         },
       ),
@@ -47,24 +50,12 @@ class MyApp extends StatelessWidget {
 }
 
 ThemeData createTheme(
-    {Brightness? brightness, Color? scaffoldBackgroundColor}) {
+    {Brightness? brightness,
+    Color? scaffoldBackgroundColor,
+    Color? cardColor}) {
   return ThemeData(
       brightness: brightness,
-      primarySwatch: MaterialColor(
-        Colors.white.hashCode,
-        <int, Color>{
-          50: Color(Colors.white.hashCode),
-          100: Color(Colors.white.hashCode),
-          200: Color(Colors.white.hashCode),
-          300: Color(Colors.white.hashCode),
-          400: Color(Colors.white.hashCode),
-          500: Color(Colors.white.hashCode),
-          600: Color(Colors.white.hashCode),
-          700: Color(Colors.white.hashCode),
-          800: Color(Colors.white.hashCode),
-          900: Color(Colors.white.hashCode),
-        },
-      ),
+      cardColor: cardColor,
       scaffoldBackgroundColor: scaffoldBackgroundColor,
       accentColor: Color.fromARGB(255, 0, 204, 106),
       fontFamily: "Quicksand");

@@ -45,7 +45,7 @@ class HistoryView extends StatelessWidget {
                   ?.copyWith(color: Theme.of(context).disabledColor),
             ))
           : Container(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).cardColor,
               child: LayoutBuilder(builder: (context, constraint) {
                 return ListView.builder(
                   itemBuilder: (context, index) {

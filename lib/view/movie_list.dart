@@ -15,14 +15,14 @@ class MovieList extends StatelessWidget {
     Widget widget = Container(
       key: Key(movie.id),
       margin: EdgeInsets.only(bottom: 1),
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).cardColor,
       child: Row(
         children: <Widget>[
           Hero(
             tag: "${movie.id}-image",
             child: Container(
               height: 160,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).cardColor,
               child: Image.network(
                 movie.detail.urlforGraphic,
                 width: imageWidth,
@@ -137,7 +137,7 @@ class MovieList extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withAlpha(100),
+        color: Theme.of(context).cardColor.withAlpha(100),
         border: Border(
           bottom: BorderSide(color: Theme.of(context).dividerColor, width: 1),
         ),

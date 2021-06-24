@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,11 +29,11 @@ class _AppPageState extends State<AppPage> {
     MenuItem(id: "2", title: "History".toUpperCase()),
     MenuItem(id: "3", title: "Promotion".toUpperCase()),
   ];
-
+  StreamSubscription? subscription;
   @override
   void initState() {
     super.initState();
-    context.read<TicketBloc>().stream.listen((event) {
+    subscription = context.read<TicketBloc>().stream.listen((event) {
       setState(() {
         selectedMenuItemId = "2";
       });
@@ -39,13 +41,25 @@ class _AppPageState extends State<AppPage> {
   }
 
   @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DrawerScaffold(
       appBar: AppBar(
-          title: Text(items
-              .where((item) => item.id == selectedMenuItemId)
-              .toList()[0]
-              .title),
+          brightness: Theme.of(context).brightness,
+          iconTheme: IconThemeData(color: Theme.of(context).hintColor),
+          backgroundColor: Theme.of(context).cardColor,
+          title: Text(
+            items
+                .where((item) => item.id == selectedMenuItemId)
+                .toList()[0]
+                .title,
+            style: TextStyle(color: Theme.of(context).hintColor),
+          ),
           elevation: 4),
       builder: (context, value) {
         return IndexedStack(
@@ -100,7 +114,7 @@ class _AppPageState extends State<AppPage> {
           ),
           selectedItemId: selectedMenuItemId,
           menu: Menu(items: items),
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).cardColor,
           textStyle: Theme.of(context).textTheme.headline5!.copyWith(),
           onMenuItemSelected: (s) {
             setState(() {
