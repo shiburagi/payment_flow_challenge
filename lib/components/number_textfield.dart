@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NumberTextInput extends StatefulWidget {
-  NumberTextInput({this.hintText, this.controller, Key key}) : super(key: key);
-  final String hintText;
-  final TextEditingController controller;
+  NumberTextInput({this.hintText, this.controller, Key? key}) : super(key: key);
+  final String? hintText;
+  final TextEditingController? controller;
 
   @override
   State<StatefulWidget> createState() {
@@ -16,7 +16,7 @@ class _NumberTextInputState extends State<NumberTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = widget?.controller ?? _controller;
+    TextEditingController controller = widget.controller ?? _controller;
     int value = int.tryParse(controller.text) ?? 0;
     var border = OutlineInputBorder(
         borderSide: BorderSide(width: 0, color: Colors.transparent));
@@ -29,11 +29,11 @@ class _NumberTextInputState extends State<NumberTextInput> {
               onPressed: value == 0
                   ? null
                   : () {
-                setState(() {
-                  value--;
-                  controller.text = value.toString();
-                });
-              }),
+                      setState(() {
+                        value--;
+                        controller.text = value.toString();
+                      });
+                    }),
           Expanded(
             child: TextFormField(
               keyboardType: TextInputType.number,

@@ -8,15 +8,15 @@ class BookingDetail {
     this.childrenCount,
   );
 
-  final String cinema;
-  final String hallType;
-  final String date;
-  final String time;
+  final String? cinema;
+  final String? hallType;
+  final String? date;
+  final String? time;
   final int adultCount;
   final int childrenCount;
   final String hall = "Hall 6";
 
-  List seats;
+  late List seats;
   static const bookingFee = 0.50;
 
   bool validate() {

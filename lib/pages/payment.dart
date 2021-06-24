@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/entities/movie.dart';
 import 'package:payment_flow_challenge/entities/ticket.dart';
@@ -12,10 +12,10 @@ class PaymentPage extends StatefulWidget {
   PaymentPage({
     this.bookingDetail,
     this.movie,
-    Key key,
+    Key? key,
   }) : super(key: key);
-  final Movie movie;
-  final BookingDetail bookingDetail;
+  final Movie? movie;
+  final BookingDetail? bookingDetail;
 
   @override
   _PaymentPageState createState() {
@@ -25,7 +25,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   buildTableRow(BuildContext context, BoxConstraints constraint, List cells,
-      {Map align = const {}, FontWeight fontWeight}) {
+      {Map align = const {}, FontWeight? fontWeight}) {
     int i = 0;
     return TableRow(
       children: cells.map((cell) {
@@ -36,7 +36,7 @@ class _PaymentPageState extends State<PaymentPage> {
               cell,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle
+                  .subtitle2!
                   .copyWith(fontWeight: fontWeight),
             ),
             alignment: align[i++],
@@ -64,26 +64,26 @@ class _PaymentPageState extends State<PaymentPage> {
         align: align,
       ),
     ];
-    if (widget.bookingDetail.adultCount > 0)
+    if (widget.bookingDetail!.adultCount > 0)
       children.add(buildTableRow(
         context,
         constraint,
         [
           "Adult",
-          widget.bookingDetail.adultCount.toString(),
-          widget.bookingDetail.priceForAdultsInString(),
+          widget.bookingDetail!.adultCount.toString(),
+          widget.bookingDetail!.priceForAdultsInString(),
         ],
         align: align,
       ));
-    if (widget.bookingDetail.childrenCount > 0)
+    if (widget.bookingDetail!.childrenCount > 0)
       children.add(
         buildTableRow(
           context,
           constraint,
           [
             "Children",
-            widget.bookingDetail.childrenCount.toString(),
-            widget.bookingDetail.priceForChildrenInString(),
+            widget.bookingDetail!.childrenCount.toString(),
+            widget.bookingDetail!.priceForChildrenInString(),
           ],
           align: align,
         ),
@@ -95,7 +95,7 @@ class _PaymentPageState extends State<PaymentPage> {
         [
           "Booking Fee",
           "",
-          widget.bookingDetail.totalBookingFeeInString(),
+          widget.bookingDetail!.totalBookingFeeInString(),
         ],
         align: align,
       ),
@@ -105,7 +105,7 @@ class _PaymentPageState extends State<PaymentPage> {
         [
           "Total",
           "",
-          widget.bookingDetail.totalPriceInString(),
+          widget.bookingDetail!.totalPriceInString(),
         ],
         align: align,
         fontWeight: FontWeight.w700,
@@ -120,19 +120,19 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
           Table(
             children: [
-              buildTableRow(context, constraint, [widget.movie.name, ""],
+              buildTableRow(context, constraint, [widget.movie!.name, ""],
                   fontWeight: FontWeight.w700),
               buildTableRow(context, constraint, [
-                widget.bookingDetail.cinema,
+                widget.bookingDetail!.cinema,
                 "",
               ]),
               buildTableRow(context, constraint, [
-                widget.bookingDetail.hall,
-                widget.bookingDetail.hallType,
+                widget.bookingDetail!.hall,
+                widget.bookingDetail!.hallType,
               ]),
               buildTableRow(context, constraint, [
-                widget.bookingDetail.date,
-                widget.bookingDetail.time,
+                widget.bookingDetail!.date,
+                widget.bookingDetail!.time,
               ]),
             ],
           ),
@@ -164,86 +164,93 @@ class _PaymentPageState extends State<PaymentPage> {
           minutes: 10,
         ),
       ),
-      body: LayoutBuilder(builder: (context, constraint) {
-        return Stack(
-          children: <Widget>[
-            Hero(
-                tag: "payment",
-                child: Container(
-                  constraints: constraint,
-                  color: Palette.getBackgroundColor(context),
-                )),
-            Positioned(
-              top: 0,
-              bottom: 100,
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: constraint.maxHeight - 200),
+      body: SafeArea(
+        child: LayoutBuilder(builder: (context, constraint) {
+          return Stack(
+            children: <Widget>[
+              Hero(
+                  tag: "payment",
                   child: Container(
-                    width: constraint.maxWidth,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: <Widget>[
+                    constraints: constraint,
+                    color: Palette.getBackgroundColor(context),
+                  )),
+              Positioned(
+                top: 0,
+                bottom: 100,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color: Theme.of(context).dividerColor))),
+                  child: SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraint.maxHeight - 200),
+                      child: Container(
+                        width: constraint.maxWidth,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                children: <Widget>[
 //                          Text("Movie Name : ${widget.movie["Name"]}")
-                            ],
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          ),
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Credit Card"),
+                                  OutlineButton(
+                                    onPressed: () {},
+                                    child: Text("Add Card"),
+                                    textColor: Theme.of(context).accentColor,
+                                    padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).accentColor),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(40))),
+                                  )
+                                ],
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                              ),
+                              padding: EdgeInsets.fromLTRB(16, 12, 16, 24),
+                            ),
+                            Container(
+                              height: 200,
+                              child: new Swiper(
+                                itemBuilder: (BuildContext context, int index) {
+                                  return CreditCardView();
+                                },
+                                itemCount: 3,
+                                viewportFraction: 0.8,
+                                scale: 0.8,
+                              ),
+                            ),
+                            Divider(
+                              height: 48,
+                              color: Palette.getDividerColor(context),
+                            ),
+                            buildSummaryLayout(context, constraint)
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
                         ),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text("Credit Card"),
-                              OutlineButton(
-                                onPressed: () {},
-                                child: Text("Add Card"),
-                                textColor: Theme.of(context).accentColor,
-                                padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(40))),
-                              )
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          ),
-                          padding: EdgeInsets.fromLTRB(16, 12, 16, 24),
-                        ),
-                        Container(
-                          height: 200,
-                          child: new Swiper(
-                            itemBuilder: (BuildContext context, int index) {
-                              return CreditCardView();
-                            },
-                            itemCount: 3,
-                            viewportFraction: 0.8,
-                            scale: 0.8,
-                          ),
-                        ),
-                        Divider(
-                          height: 48,
-                          color: Palette.getDividerColor(context),
-                        ),
-                        buildSummaryLayout(context, constraint)
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 32,
-              left: 48,
-              right: 48,
-              child: Column(children: [
-                Hero(
-                  tag: "next",
-                  child: FloatingActionButton.extended(
+              Positioned(
+                bottom: 32,
+                left: 48,
+                right: 48,
+                child: Column(children: [
+                  FloatingActionButton.extended(
+                    heroTag: "next",
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           fullscreenDialog: true,
@@ -255,13 +262,12 @@ class _PaymentPageState extends State<PaymentPage> {
                     icon: Icon(Icons.done),
                     label: Text("Confirm"),
                   ),
-                ),
-              ]),
-            )
-          ],
-        );
-      }),
+                ]),
+              )
+            ],
+          );
+        }),
+      ),
     );
   }
 }
-

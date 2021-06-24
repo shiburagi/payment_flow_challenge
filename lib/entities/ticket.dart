@@ -4,6 +4,6 @@ import 'package:payment_flow_challenge/entities/movie.dart';
 class Ticket {
   Ticket(this.movie, this.bookingDetail);
 
-  final Movie movie;
-  final BookingDetail bookingDetail;
+  final Movie? movie;
+  final BookingDetail? bookingDetail;
 }

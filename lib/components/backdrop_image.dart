@@ -3,17 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BackdropImage extends StatelessWidget {
-  BackdropImage({this.image, this.child, Key key}) : super(key: key);
+  BackdropImage({this.image, this.child, Key? key}) : super(key: key);
 
-  final ImageProvider image;
-  final Widget child;
+  final ImageProvider? image;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
-          image: image,
+          image: image!,
           fit: BoxFit.cover,
         ),
       ),
@@ -22,6 +22,5 @@ class BackdropImage extends StatelessWidget {
         child: child,
       ),
     );
-    ;
   }
 }

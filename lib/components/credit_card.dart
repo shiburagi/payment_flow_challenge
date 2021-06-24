@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CreditCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,13 +17,13 @@ class CreditCardView extends StatelessWidget {
                     Text("Card Number",
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle
+                            .subtitle2!
                             .copyWith(color: Colors.white70)),
                     Text(
                       "XXXX XXXXXX XXXXX",
                       style: Theme.of(context)
                           .textTheme
-                          .headline
+                          .headline5!
                           .copyWith(color: Colors.white),
                     ),
                   ],
@@ -37,7 +36,7 @@ class CreditCardView extends StatelessWidget {
                     Text("Expire Date",
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle
+                            .subtitle2!
                             .copyWith(color: Colors.white70)),
                     Row(
                       children: <Widget>[
@@ -45,7 +44,7 @@ class CreditCardView extends StatelessWidget {
                           "04/22",
                           style: Theme.of(context)
                               .textTheme
-                              .headline
+                              .headline5!
                               .copyWith(color: Colors.white),
                         ),
                         Image(

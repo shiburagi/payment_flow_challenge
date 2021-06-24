@@ -5,9 +5,9 @@ import 'package:payment_flow_challenge/utils/clip_shadow_path.dart';
 import 'package:payment_flow_challenge/utils/custom_clipper.dart';
 
 class MovieList extends StatelessWidget {
-  MovieList({Key key, this.items}) : super(key: key);
+  MovieList({Key? key, this.items}) : super(key: key);
 
-  final List items;
+  final List? items;
   static double imageWidth = 120;
   static double reserveWidth = imageWidth + 45.0;
 
@@ -33,82 +33,81 @@ class MovieList extends StatelessWidget {
           Container(
             width: 12,
           ),
-          Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 6),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width:
-                          MediaQuery.of(context).size.width - reserveWidth - 10,
-                      child: Text(
-                        movie.name.toUpperCase(),
+          Flexible(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 6),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          movie.name.toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(fontWeight: FontWeight.w700),
+                          overflow: TextOverflow.fade,
+                        ),
+                      ),
+                      Container(
+                        height: 6,
+                      ),
+                      Text(
+                        "(${movie.detail.censor}) ${movie.detail.content}",
                         style: Theme.of(context)
                             .textTheme
-                            .subhead
-                            .copyWith(fontWeight: FontWeight.w700),
-                        overflow: TextOverflow.fade,
+                            .subtitle1!
+                            .copyWith(wordSpacing: 0),
                       ),
-                    ),
-                    Container(
-                      height: 6,
-                    ),
-                    Text(
-                      "(${movie.detail.censor}) ${movie.detail.content}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subhead
-                          .copyWith(wordSpacing: 0),
-                    ),
-                    Text(
-                      "${movie.detail.duration} minutes",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subhead
-                          .copyWith(wordSpacing: 0),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                      Text(
+                        "${movie.detail.duration} minutes",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(wordSpacing: 0),
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
                 ),
-              ),
-              Container(
-                height: 6,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width - reserveWidth - 8,
-                child: Row(
-                  children: <Widget>[
-                    Row(children: <Widget>[
-                      FloatingActionButton(
-                        onPressed: () {},
-                        heroTag: "${movie.id}-info",
-                        mini: true,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.info_outline,
-                          size: 16,
-                        ),
-                      ),
-                      FloatingActionButton(
-                        onPressed: () {},
-                        heroTag: "${movie.id}-share",
-                        mini: true,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.share,
-                          size: 16,
-                        ),
-                      ),
-                    ]),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
+                Container(
+                  height: 6,
                 ),
-              ),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        FloatingActionButton(
+                          onPressed: () {},
+                          heroTag: "${movie.id}-info",
+                          mini: true,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 16,
+                          ),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {},
+                          heroTag: "${movie.id}-share",
+                          mini: true,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.share,
+                            size: 16,
+                          ),
+                        ),
+                      ]),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                  ),
+                ),
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
           )
         ],
         mainAxisSize: MainAxisSize.max,
@@ -118,16 +117,18 @@ class MovieList extends StatelessWidget {
     return Container(
       child: Row(
         children: <Widget>[
-          ClipShadowPath(
-              shadow: Shadow(color: Colors.black54),
-              clipper: LeftClipRectClipper(),
-              child: widget),
+          Expanded(
+            child: ClipShadowPath(
+                shadow: Shadow(color: Colors.black54),
+                clipper: LeftClipRectClipper(),
+                child: widget),
+          ),
 //        widget,
           Container(
             padding: EdgeInsets.all(12),
             child: Text(
               "B\nU\nY",
-              style: Theme.of(context).textTheme.subhead.copyWith(
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.w700,
                   color: Theme.of(context).accentColor),
               textAlign: TextAlign.center,
@@ -147,9 +148,9 @@ class MovieList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget listView = ListView.builder(
-      itemCount: items.length,
+      itemCount: items!.length,
       itemBuilder: (c, position) {
-        var movie = Movie().fromJson(items[position]);
+        var movie = Movie().fromJson(items![position]);
         return GestureDetector(
           child: Container(
             color: Theme.of(context).scaffoldBackgroundColor,

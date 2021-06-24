@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class CountDownView extends StatefulWidget {
-  CountDownView({this.minutes = 0, this.seconds = 0, Key key})
+  CountDownView({this.minutes = 0, this.seconds = 0, Key? key})
       : super(key: key);
 
   final int minutes;
@@ -18,7 +18,7 @@ class CountDownView extends StatefulWidget {
 class _CountDownViewState extends State<CountDownView> {
   int totalSeconds = 0;
 
-  Timer timer;
+  late Timer timer;
 
   @override
   void initState() {

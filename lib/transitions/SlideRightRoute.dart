@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SlideRightRoute extends PageRouteBuilder {
-  final Widget widget;
+  final Widget? widget;
 
   SlideRightRoute({this.widget})
       : super(pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return widget;
+          return widget!;
         }, transitionsBuilder: (BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
@@ -22,12 +22,12 @@ class SlideRightRoute extends PageRouteBuilder {
 }
 
 class SlideLeftRoute extends PageRouteBuilder {
-  final Widget widget;
+  final Widget? widget;
 
   SlideLeftRoute({this.widget})
       : super(pageBuilder: (BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    return widget;
+    return widget!;
   }, transitionsBuilder: (BuildContext context,
       Animation<double> animation,
       Animation<double> secondaryAnimation,
@@ -49,12 +49,12 @@ class SlideLeftRoute extends PageRouteBuilder {
 
 
 class SlideTopRoute extends PageRouteBuilder {
-  final Widget widget;
+  final Widget? widget;
 
   SlideTopRoute({this.widget})
       : super(pageBuilder: (BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    return widget;
+    return widget!;
   }, transitionsBuilder: (BuildContext context,
       Animation<double> animation,
       Animation<double> secondaryAnimation,
@@ -75,12 +75,12 @@ class SlideTopRoute extends PageRouteBuilder {
 }
 
 class RippleEffectRoute extends PageRouteBuilder {
-  final Widget widget;
+  final Widget? widget;
 
   RippleEffectRoute({this.widget})
       : super(pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return widget;
+          return widget!;
         }, transitionsBuilder: (BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,

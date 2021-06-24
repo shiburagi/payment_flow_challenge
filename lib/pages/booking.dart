@@ -6,8 +6,8 @@ import 'package:payment_flow_challenge/entities/booking_detail.dart';
 import 'package:payment_flow_challenge/pages/seat_selection.dart';
 
 class BookingPage extends StatefulWidget {
-  BookingPage({Key key, this.title, this.movie}) : super(key: key);
-  final String title;
+  BookingPage({Key? key, this.title, this.movie}) : super(key: key);
+  final String? title;
   final movie;
 
   @override
@@ -31,20 +31,20 @@ class _BookingPageState extends State<BookingPage> {
   TextEditingController adultController = TextEditingController();
   TextEditingController childrenController = TextEditingController();
 
-  BookingDetail detail;
+  BookingDetail? detail;
 
   Color getColor(index) {
     int color;
     if (Theme.of(context).brightness == Brightness.dark)
-      color = diffPerTone * totalField + 20 - diffPerTone * (index + 1);
+      color = diffPerTone * totalField + 20 - (diffPerTone * (index + 1) as int);
     else
-      color = 255 - diffPerTone * totalField + 20 - diffPerTone * (index + 1);
+      color = 255 - diffPerTone * totalField + 20 - (diffPerTone * (index + 1) as int);
 
     return Color.fromRGBO(color, color, color, 1);
   }
 
   Widget itemContainer(context, constraints,
-      {child, int index, colorIndex, int span = 1}) {
+      {child, required int index, colorIndex, int span = 1}) {
     double top = (itemHeight - radius) * index + 0;
     return Container(
       margin: EdgeInsets.only(top: top),
@@ -255,10 +255,10 @@ class _BookingPageState extends State<BookingPage> {
                         child: FloatingActionButton(
                           child: Icon(Icons.event_seat),
                           heroTag: "next",
-                          backgroundColor: detail.validate()
+                          backgroundColor: detail!.validate()
                               ? Theme.of(context).accentColor
                               : Theme.of(context).disabledColor,
-                          onPressed: detail.validate()
+                          onPressed: detail!.validate()
                               ? () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       fullscreenDialog: true,

@@ -1,8 +1,8 @@
 class Movie {
-  String id;
-  String name;
-  String rating;
-  Detail detail;
+  String? id;
+  String? name;
+  String? rating;
+  late Detail detail;
 
   Movie fromJson(Map map) {
     id = map["Id"];
@@ -14,11 +14,11 @@ class Movie {
 }
 
 class Detail {
-  String categories;
-  String censor;
-  String content;
-  String duration;
-  String urlforGraphic;
+  String? categories;
+  String? censor;
+  String? content;
+  String? duration;
+  String? urlforGraphic;
 
   Detail fromJson(Map map) {
     categories = map["Categories"];
