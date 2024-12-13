@@ -1,4 +1,4 @@
-# payment_flow_challenge
+# payment flow challenge
 
 ![Alt Text](https://github.com/shiburagi/payment_flow_challenge/blob/master-v2/preview/gif/preview-1.gif?raw=true)
 
